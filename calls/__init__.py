@@ -1,6 +1,7 @@
 import requests
 import warnings
 from .functions import basic_request
+from .functions import print_systems
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -14,5 +15,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
+print_systems(ip, username, password)
 
 # get all the information
