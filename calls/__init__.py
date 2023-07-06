@@ -4,7 +4,7 @@ ip = input("enter redfish ip")
 username = input("enter username")
 password = input("enter password")
 
-response = (requests.get("https://" + ip + "/redfish/v1/Systems/1", auth=(username, password), verify=False))
+response = (requests.get("https://" + ip + "/redfish/v1/Systems/1", auth=(username, password)))
 
 if response.status_code == 200:
     print("Response Successful")
