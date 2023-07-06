@@ -15,13 +15,17 @@ def get_systemIDs(ip, username, password):
         systemIDs.append(member['@odata.id'])
     return systemIDs
 
-
-def get_memory_info(ip, username, password):
+def get_system_objects(ip, username, password):
     systems = []
     systemIDs = get_systemIDs(ip, username, password)
-    memorySums = []
     for systemID in systemIDs:
         systems.append(json.loads(basic_request(ip, username, password, systemID).text))
+    return systems
+
+
+def get_memory_info(ip, username, password):
+    memorySums = []
+    systems = get_system_objects(ip, username, password)
     for system in systems:
         memorySums.append(system['MemorySummary'])
     return memorySums
