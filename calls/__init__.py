@@ -1,4 +1,7 @@
 import requests
+import warnings
+
+warnings.filterwarnings("ignore", message="InsecureRequestWarning: Unverified HTTPS request is being made. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html")
 
 ip = input("enter redfish ip")
 username = input("enter username")
