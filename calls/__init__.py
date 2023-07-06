@@ -2,9 +2,9 @@ import requests
 import warnings
 from .functions import basic_request
 
-ip = input("enter redfish ip")
-username = input("enter username")
-password = input("enter password")
+ip = input("Enter iLO IP: ")
+username = input("Enter iLO Username: ")
+password = input("Enter iLO Password: ")
 
 response = basic_request(ip, username, password, "Systems/1")
 
