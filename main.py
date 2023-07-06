@@ -1,24 +1,15 @@
-from http.client import HTTPSConnection
-from base64 import b64encode
-
-
-# Authorization token: we need to base 64 encode it 
-# and then decode it to acsii as python 3 stores it as a byte string
-def basic_auth(username, password):
-    token = b64encode(f"{username}:{password}".encode('utf-8')).decode("ascii")
-    return f'Basic {token}'
+import requests
 
 ip = input("enter redfish ip")
 username = input("enter username")
 password = input("enter password")
 
-#This sets up the https connection
-c = HTTPSConnection("https://" + ip + "/redfish.Systems/1")
-#then connect
-headers = { 'Authorization' : basic_auth(username, password) }
-c.request('GET', '/', headers=headers)
-#get the response back
-res = c.getresponse()
-# at this point you could check the status etc
-# this gets the page text
-data = res.read()  
+response = (requests.get("http://" + ip + "/redfish/v1/Systems/1", auth=(username, password)))
+
+if response.status_code == 200:
+    print("Response Successful")
+    print(response.text)
+else:
+    print("response unsuccessful with status code: ", response.status_code)
+
+
