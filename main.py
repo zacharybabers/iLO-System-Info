@@ -1,25 +1,24 @@
-import sys
-import redfish
+from http.client import HTTPSConnection
+from base64 import b64encode
 
-# When running remotely connect using the address, account name, 
-# and password to send https requests
-login_host = "https://" + input("iLO IP?")
-login_account = input("iLO username?")
-login_password = input("iLO password?")
 
-## Create a REDFISH object
-REDFISH_OBJ = redfish.redfish_client(base_url=login_host, \
-                                     username=login_account, \
-                                     password=login_password)
+# Authorization token: we need to base 64 encode it 
+# and then decode it to acsii as python 3 stores it as a byte string
+def basic_auth(username, password):
+    token = b64encode(f"{username}:{password}".encode('utf-8')).decode("ascii")
+    return f'Basic {token}'
 
-# Login into the server and create a session
-REDFISH_OBJ.login(auth="basic")
+ip = input("enter redfish ip")
+username = input("enter username")
+password = input("enter password")
 
-# Do a GET on a given path
-response = REDFISH_OBJ.get("/redfish/v1/systems/")
-
-# Print out the response
-sys.stdout.write("%s\n" % response.text)
-
-# Logout of the current session
-REDFISH_OBJ.logout()
+#This sets up the https connection
+c = HTTPSConnection("https://" + ip + "/redfish.Systems/1")
+#then connect
+headers = { 'Authorization' : basic_auth(username, password) }
+c.request('GET', '/', headers=headers)
+#get the response back
+res = c.getresponse()
+# at this point you could check the status etc
+# this gets the page text
+data = res.read()  
