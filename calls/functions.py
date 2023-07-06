@@ -10,10 +10,10 @@ def basic_request(ip, username, password, redfish_item):
 
 def get_systemIDs(ip, username, password):
     systems = json.loads(basic_request(ip,username,password,"/redfish/v1/Systems").text)
-    systems = []
+    systemIDs = []
     for member in systems['Members']:
         systems.append(member['@odata.id'])
-    return systems
+    return systemIDs
 
 
 def get_memory_info(ip, username, password):
