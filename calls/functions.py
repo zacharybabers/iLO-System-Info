@@ -5,10 +5,22 @@ import json
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        response = (requests.get("https://" + ip + "/redfish/v1/" + redfish_item, auth=(username, password), verify=False))
+        response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False))
     return response
 
-def print_systems(ip, username, password):
+def get_systemIDs(ip, username, password):
     systems = json.loads(basic_request(ip,username,password,"Systems").text)
+    systems = []
     for member in systems['Members']:
-        print(member['@odata.id'])
+        systems.append(member['@odata.id'])
+    return systems
+
+
+def get_memory_info(ip, username, password):
+    systems = []
+    for systemID in get_systemIDs(ip, username, password):
+        systems.append(json.loads(basic_request(ip, username, password, systemID).text))
+    for system in systems:
+        print(system['MemorySummary'])
+
+        
