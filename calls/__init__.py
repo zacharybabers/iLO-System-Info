@@ -11,7 +11,6 @@ response = basic_request(ip, username, password, "Systems")
 
 if response.status_code == 200:
     print("Response Successful")
-    print(response.text)
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
