@@ -19,9 +19,14 @@ def get_systemIDs(ip, username, password):
 def get_memory_info(ip, username, password):
     systems = []
     systemIDs = get_systemIDs(ip, username, password)
+    memorySums = []
     for systemID in systemIDs:
         systems.append(json.loads(basic_request(ip, username, password, systemID).text))
     for system in systems:
-        print(system['MemorySummary'])
+        memorySums.append(system['MemorySummary'])
+    return memorySums
+
+# A memory summary looks like:
+# {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': 512, 'TotalSystemPersistentMemoryGiB': 0}
 
 
