@@ -34,3 +34,10 @@ def get_memory_info(ip, username, password):
 # {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': 512, 'TotalSystemPersistentMemoryGiB': 0}
 
 
+def get_model_name(ip,username,password):
+    names = []
+    systems = get_system_objects(ip, username, password)
+    for system in systems:
+        names.append(system['Model'])
+    print(names[0])
+    return names
