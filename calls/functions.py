@@ -18,9 +18,10 @@ def get_systemIDs(ip, username, password):
 
 def get_memory_info(ip, username, password):
     systems = []
-    for systemID in get_systemIDs(ip, username, password):
+    systemIDs = get_systemIDs(ip, username, password)
+    for systemID in systemIDs:
         systems.append(json.loads(basic_request(ip, username, password, systemID).text))
     for system in systems:
         print(system['MemorySummary'])
 
-        
+
