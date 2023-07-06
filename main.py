@@ -3,7 +3,7 @@ import redfish
 
 # When running remotely connect using the address, account name, 
 # and password to send https requests
-login_host = input("iLO IP?")
+login_host = "https://" + input("iLO IP?")
 login_account = input("iLO username?")
 login_password = input("iLO password?")
 
