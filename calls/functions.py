@@ -12,7 +12,7 @@ def get_systemIDs(ip, username, password):
     systems = json.loads(basic_request(ip,username,password,"/redfish/v1/Systems").text)
     systemIDs = []
     for member in systems['Members']:
-        systems.append(member['@odata.id'])
+        systemIDs.append(member['@odata.id'])
     return systemIDs
 
 
