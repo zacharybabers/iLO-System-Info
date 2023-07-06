@@ -1,5 +1,6 @@
 import warnings
 import requests
+import json
 
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
