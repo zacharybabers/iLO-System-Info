@@ -63,3 +63,13 @@ def get_processor_objects(ip, username, password):
     for id in processorIDs:
         processors.append(json.loads(basic_request(ip, username, password, id).text))
     return processors
+
+def print_processor_info(processor):
+    infoString = ""
+    infoString += "Model: " + processor['Model'] + "\n"
+    infoString += "Socket: " + processor['Socket'] + "\n"
+    infoString += "Total Cores: " + processor['TotalCores'] + "\n"
+    infoString += "Total Threads: " + processor['TotalThreads'] + "\n"
+    infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
+    print(infoString)
+    
