@@ -56,3 +56,10 @@ def get_processorIDs(ip, username, password):
     for processor in processors['Members']:
         processorIDs.append(processor['@odata.id'])
     return processorIDs
+
+def get_processor_objects(ip, username, password):
+    processors = []
+    processorIDs = get_processorIDs
+    for id in processorIDs:
+        processors.append(json.loads(basic_request(ip, username, password, id).text))
+    return processors
