@@ -1,7 +1,7 @@
 import requests
 import warnings
 from .functions import basic_request
-from .functions import get_driveIDs
+from .functions import get_drive_objects
 from .functions import get_storage_objects
 
 ip = input("Enter iLO IP: ")
@@ -15,6 +15,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-print(get_driveIDs(get_storage_objects(ip, username, password)[0]))
+print(get_drive_objects(get_storage_objects(ip, username, password)[0]))
 
 # get all the information

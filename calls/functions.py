@@ -93,4 +93,11 @@ def get_driveIDs(storage):
         driveIDs.append(drive['@odata.id'])
     return driveIDs
 
+def get_drive_objects(storage):
+    drives = []
+    driveIDs = get_driveIDs(storage)
+    for id in driveIDs:
+        drives.append(json.loads(basic_request(ip, username, password, id).text))
+    return drives
+
     
