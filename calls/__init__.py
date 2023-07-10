@@ -14,6 +14,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-print(get_processorIDs(ip, username, password)[0])
+print(get_processorIDs(ip, username, password))
 
 # get all the information
