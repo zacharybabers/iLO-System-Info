@@ -15,6 +15,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-print(get_driveIDs(get_storage_objects[0]))
+print(get_driveIDs(get_storage_objects(ip, username, password)[0]))
 
 # get all the information
