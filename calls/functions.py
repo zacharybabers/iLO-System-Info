@@ -80,4 +80,11 @@ def get_storageIDs(ip, username, password):
         storageIDs.append(storage['@odata.id'])
     return storageIDs
 
+def get_storage_objects(ip, username, password):
+    storage = []
+    storageIDs = get_storageIDs(ip, username, password)
+    for id in storageIDs:
+        storage.append(json.loads(basic_request(ip, username, password, id).text))
+    return storage
+
     
