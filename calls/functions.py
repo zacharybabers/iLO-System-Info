@@ -68,8 +68,8 @@ def print_processor_info(processor):
     infoString = ""
     infoString += "Model: " + processor['Model'] + "\n"
     infoString += "Socket: " + processor['Socket'] + "\n"
-    infoString += "Total Cores: " + processor['TotalCores'] + "\n"
-    infoString += "Total Threads: " + processor['TotalThreads'] + "\n"
+    infoString += "Total Cores: " + str(processor['TotalCores']) + "\n"
+    infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
     infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
     print(infoString)
     
