@@ -55,5 +55,5 @@ def get_processorIDs(ip, username, password):
     systems = get_system_objects(ip, username, password)
     for system in systems:
         for processor in system['Processors']:
-            processorIDs.append(processor)
+            processorIDs.append(type(processor))
     return processorIDs
