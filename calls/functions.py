@@ -100,4 +100,8 @@ def get_drive_objects(ip, username, password, storage):
         drives.append(json.loads(basic_request(ip, username, password, id).text))
     return drives
 
+def print_drive_info(drive):
+    # name
+    return drive
+
     
