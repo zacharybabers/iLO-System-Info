@@ -104,8 +104,8 @@ def print_drive_info(drive):
     # name
     infoString = ""
     infoString += "Name: " + drive['Name'] + "\n"
+    capacityBytes = drive['CapacityBytes']
     if(type(capacityBytes) == int):
-        capacityBytes = drive['CapacityBytes']
         capacityGB = capacityBytes / 1000 / 1000 / 1000
         infoString += "Capacity Bytes: " + str(drive['CapacityBytes']) + "\n"
         infoString += "Capacity GB: " + str(capacityGB) + "\n"
