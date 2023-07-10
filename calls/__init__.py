@@ -1,7 +1,7 @@
 import requests
 import warnings
 from .functions import basic_request
-from .functions import get_network_interface_count
+from .functions import get_adapterIDs
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -14,6 +14,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-print(get_network_interface_count(ip, username, password))
+print(get_adapterIDs(ip, username, password))
 
 # get all the information

@@ -118,4 +118,13 @@ def get_network_interface_count(ip, username, password):
     interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
     return interfaces['Members@odata.count']
 
+####
+def get_adapterIDs(ip, username, password):
+    adapters = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/BaseNetworkAdapters").text)
+    adapterIDs = []
+    for id in adapters['Members']:
+        adapterIDs.append(id['@odata.id'])
+    return adapterIDs
+
+
     
