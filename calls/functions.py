@@ -104,7 +104,10 @@ def print_drive_info(drive):
     # name
     infoString = ""
     infoString += "Name: " + drive['Name'] + "\n"
+    capacityBytes = drive['CapacityBytes']
+    capacityGB = capacityBytes / 1000 / 1000 / 1000
     infoString += "Capacity Bytes: " + str(drive['CapacityBytes']) + "\n"
+    infoString += "Capacity GB: " + str(capacityGB) + "\n"
     infoString += "Physical Location: " + drive['PhysicalLocation']['PartLocation']['ServiceLabel'] + "\n"
     infoString += "Ordinal Location: " + str(drive['PhysicalLocation']['PartLocation']['LocationOrdinalValue']) + "\n"
     print(infoString)
