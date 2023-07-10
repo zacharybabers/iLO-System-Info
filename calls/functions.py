@@ -87,4 +87,10 @@ def get_storage_objects(ip, username, password):
         storage.append(json.loads(basic_request(ip, username, password, id).text))
     return storage
 
+def get_driveIDs(storage):
+    driveIDs = []
+    for drive in storage['Drives']:
+        driveIDs.append(drive['@odata.id'])
+    return driveIDs
+
     
