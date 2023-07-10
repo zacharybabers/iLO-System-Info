@@ -126,5 +126,12 @@ def get_adapterIDs(ip, username, password):
         adapterIDs.append(id['@odata.id'])
     return adapterIDs
 
+def get_adapter_objects(ip, username, password):
+    adapters = []
+    adapterIDs = get_adapterIDs(ip, username, password)
+    for id in adapterIDs:
+        adapters.append(json.loads(basic_request(ip, username, password, id).text))
+    return adapters
+
 
     
