@@ -72,4 +72,12 @@ def print_processor_info(processor):
     infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
     infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
     print(infoString)
+
+def get_storageIDs(ip, username, password):
+    storageIDs = []
+    storages = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Storage").text)
+    for storage in storages['Members']:
+        storageIDs.append(storage['@odata.id'])
+    return storageIDs
+
     
