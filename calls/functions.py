@@ -49,3 +49,11 @@ def get_cpu_summary(ip, username, password):
     return cpuSums
 # A cpu summary looks like:
 # {'Count': 2, 'Model': 'Vendor(R) CPU(R) Gold xN CPU @ x.xGHz', 'Status': {'HealthRollup': 'OK'}}
+
+def get_processorIDs(ip, username, password):
+    processorIDs = []
+    systems = get_system_objects(ip, username, password)
+    for system in systems:
+        for processor in system['Processors']:
+            processorIDs.append(processor['@odata.id'])
+    return processorIDs
