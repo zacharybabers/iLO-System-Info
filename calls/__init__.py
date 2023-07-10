@@ -14,6 +14,6 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-get_model_name(ip, username, password)
+print(get_model_name(ip, username, password))
 
 # get all the information

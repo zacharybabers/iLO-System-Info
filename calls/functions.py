@@ -39,5 +39,4 @@ def get_model_name(ip,username,password):
     systems = get_system_objects(ip, username, password)
     for system in systems:
         names.append(system['Model'])
-    print(names[0])
     return names
