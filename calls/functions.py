@@ -31,7 +31,7 @@ def get_memory_info(ip, username, password):
     return memorySums
 
 # A memory summary looks like:
-# {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': 512, 'TotalSystemPersistentMemoryGiB': 0}
+# {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': x, 'TotalSystemPersistentMemoryGiB': 0}
 
 
 def get_model_name(ip,username,password):
@@ -47,3 +47,5 @@ def get_cpu_summary(ip, username, password):
     for system in systems:
         cpuSums.append(system['ProcessorSummary'])
     return cpuSums
+# A cpu summary looks like:
+# {'Count': 2, 'Model': 'Vendor(R) CPU(R) Gold xN CPU @ x.xGHz', 'Status': {'HealthRollup': 'OK'}}
