@@ -52,7 +52,7 @@ def get_cpu_summary(ip, username, password):
 
 def get_processorIDs(ip, username, password):
     processorIDs = []
-    processors = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Processors"))
+    processors = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Processors").text)
     for processor in processors['Members']:
         processorIDs.append(processor['@odata.id'])
     return processorIDs
