@@ -59,7 +59,7 @@ def get_processorIDs(ip, username, password):
 
 def get_processor_objects(ip, username, password):
     processors = []
-    processorIDs = get_processorIDs
+    processorIDs = get_processorIDs(ip, username, password)
     for id in processorIDs:
         processors.append(json.loads(basic_request(ip, username, password, id).text))
     return processors
