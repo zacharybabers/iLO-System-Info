@@ -102,6 +102,10 @@ def get_drive_objects(ip, username, password, storage):
 
 def print_drive_info(drive):
     # name
-    return drive
-
+    infoString = ""
+    infoString += "Name: " + drive['Name'] + "\n"
+    infoString += "Capacity Bytes: " + str(drive['CapacityBytes']) + "\n"
+    infoString += "Physical Location: " + drive['PhysicalLocation']['PartLocation']['ServiceLabel'] + "\n"
+    infoString += "Ordinal Location: " + str(drive['PhysicalLocation']['PartLocation']['LocationOrdinalValue']) + "\n"
+    print(infoString)
     
