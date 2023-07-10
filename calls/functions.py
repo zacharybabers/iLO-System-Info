@@ -54,6 +54,6 @@ def get_processorIDs(ip, username, password):
     processorIDs = []
     systems = get_system_objects(ip, username, password)
     for system in systems:
-        for processor in system['Processors']:
-            processorIDs.append(processor)
+        for processor in system['Processors']['Members']:
+            processorIDs.append(processor['@odata.id'])
     return processorIDs
