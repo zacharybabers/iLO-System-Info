@@ -93,7 +93,7 @@ def get_driveIDs(storage):
         driveIDs.append(drive['@odata.id'])
     return driveIDs
 
-def get_drive_objects(storage):
+def get_drive_objects(ip, username, password, storage):
     drives = []
     driveIDs = get_driveIDs(storage)
     for id in driveIDs:
