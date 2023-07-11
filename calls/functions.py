@@ -86,6 +86,13 @@ def get_processor_info(processor):
     infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
     return(infoString)
 
+def processor_info_dump(ip, username, password):
+    processors = get_processor_objects(ip, username, password)
+    out = ""
+    for processor in processors:
+        out += get_processor_info(processor)
+    return out
+
 def get_storageIDs(ip, username, password):
     storageIDs = []
     storages = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Storage").text)

@@ -7,6 +7,7 @@ from .functions import get_drive_info
 from .functions import get_drive_objects
 from .functions import get_storage_objects
 from .functions import mem_info_dump
+from .functions import processor_info_dump
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -20,6 +21,8 @@ else:
     print("response unsuccessful with status code: \n", response.status_code)
 
 print(mem_info_dump(ip, username, password))
+
+print(processor_info_dump(ip, username, password))
 
 adapters = get_adapter_objects(ip, username, password)
 for adapter in adapters:
