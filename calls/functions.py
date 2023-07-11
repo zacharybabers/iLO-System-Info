@@ -54,6 +54,13 @@ def get_model_name(ip,username,password):
         names.append(system['Model'])
     return names
 
+def model_info_dump(ip, username, password):
+    names = get_model_name(ip, username, password)
+    out = ""
+    for name in names:
+        out += name + "\n"
+    return out
+
 def get_cpu_summary(ip, username, password):
     cpuSums = []
     systems = get_system_objects(ip, username, password)

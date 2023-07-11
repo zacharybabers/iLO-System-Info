@@ -5,7 +5,7 @@ from .functions import adapter_info_dump
 from .functions import drive_info_dump
 from .functions import mem_info_dump
 from .functions import processor_info_dump
-from .functions import get_model_name
+from .functions import model_info_dump
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -18,7 +18,7 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: \n", response.status_code)
 
-print(get_model_name(ip, username, password))
+print(model_info_dump(ip, username, password))
 print(mem_info_dump(ip, username, password))
 print(processor_info_dump(ip, username, password))
 print(adapter_info_dump(ip, username, password))
