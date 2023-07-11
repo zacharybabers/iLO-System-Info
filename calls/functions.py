@@ -136,12 +136,33 @@ def get_adapter_ports(adapter):
     ports = adapter['PhysicalPorts']
     return ports
 
+def print_port_info(port):
+    infoString = ""
+    ipv4 = port['IPv4Addresses']
+    if(len(ipv4) > 0):
+        for address in ipv4:
+            infoString += "IPV4 Address: " + str(address) + "\n"
+    else:
+        infoString += "IPV4 Address: None \n"
+    ipv6 = port['IPv6Addresses']
+    if(len(ipv6) > 0):
+        for address in ipv6:
+                infoString += "IPV6 Address: " + str(address) + "\n"
+    else:
+        infoString += "IPV6 Address: None \n"
+    infoString += "Mac Address: " + str(port['MacAddress']) + "\n"
+    infoString += "Speed Mbps: " + str(port['SpeedMbps']) + "\n"
+    print(infoString)
+
 def print_adapter_info(adapter):
     infoString = ""
     infoString += "Name: " + adapter['Name'] + "\n"
     infoString += "ID: " + str(adapter['Id']) + "\n"
     infoString += "Location: " + adapter['Location'] + "\n"
+    ports = get_adapter_ports(adapter)
     print(infoString)
+    for port in ports:
+        print_port_info(port)
     
 
 

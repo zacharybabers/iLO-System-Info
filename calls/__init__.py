@@ -2,7 +2,7 @@ import requests
 import warnings
 from .functions import basic_request
 from .functions import get_adapter_objects
-from .functions import get_adapter_ports
+from .functions import print_adapter_info
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -16,6 +16,7 @@ else:
     print("response unsuccessful with status code: \n", response.status_code)
 
 adapters = get_adapter_objects(ip, username, password)
-print(adapters[0])
+for adapter in adapters:
+    print_adapter_info(adapter)
 
 # get all the information
