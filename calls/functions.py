@@ -40,7 +40,12 @@ def get_memory_info(memorySum):
     infoString += "Total System Persistent Memory: " + str(memorySum['TotalSystemPersistentMemoryGiB']) + "\n"
     return infoString
 
-
+def mem_info_dump(ip, username, password):
+    out = ""
+    sums = get_memory_sums(ip, username, password)
+    for sum in sums:
+        out += get_memory_info(sum)
+    return out
 
 def get_model_name(ip,username,password):
     names = []
