@@ -83,7 +83,8 @@ def get_processor_info(processor):
     infoString += "Socket: " + processor['Socket'] + "\n"
     infoString += "Total Cores: " + str(processor['TotalCores']) + "\n"
     infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
-    infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
+    if('InstructionSet' in processor.keys()):
+        infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
     return(infoString)
 
 def processor_info_dump(ip, username, password):
