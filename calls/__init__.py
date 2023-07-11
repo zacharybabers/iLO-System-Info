@@ -5,6 +5,7 @@ from .functions import get_adapter_objects
 from .functions import get_adapter_info
 from .functions import get_drive_info
 from .functions import get_drive_objects
+from .functions import get_storage_objects
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -21,7 +22,9 @@ adapters = get_adapter_objects(ip, username, password)
 for adapter in adapters:
     print(get_adapter_info(adapter))
 
-drives = get_drive_objects(ip, username, password)
-for drive in drives:
-    print(get_drive_info(drive))
+storages = get_storage_objects(ip, username, password)
+for storage in storages:
+    drives = get_drive_objects(ip, username, password, storage)
+    for drive in drives:
+        print(get_drive_info(drive))
 # get all the information
