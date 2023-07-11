@@ -17,6 +17,6 @@ else:
 
 adapters = get_adapter_objects(ip, username, password)
 for adapter in adapters:
-    print(get_adapter_ports(adapter))
+    print(get_adapter_ports(adapter)[0])
 
 # get all the information
