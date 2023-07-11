@@ -132,6 +132,10 @@ def get_adapter_objects(ip, username, password):
         adapters.append(json.loads(basic_request(ip, username, password, id).text))
     return adapters
 
+def get_adapter_ports(adapter):
+    ports = adapter['PhysicalPorts']
+    return ports
+
 def print_adapter_info(adapter):
     infoString = ""
     infoString += "Name: " + adapter['Name'] + "\n"
