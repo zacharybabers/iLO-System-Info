@@ -169,7 +169,7 @@ def get_adapter_info(adapter):
     infoString += "Location: " + adapter['Location'] + "\n"
     ports = get_adapter_ports(adapter)
     for port in ports:
-        infoString += "Port of " + adapter['Name'] + "\n"
+        infoString += "Port \n"
         infoString += get_port_info(port)
     return infoString
     
