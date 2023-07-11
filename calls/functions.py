@@ -101,7 +101,6 @@ def get_drive_objects(ip, username, password, storage):
     return drives
 
 def print_drive_info(drive):
-    # name
     infoString = ""
     infoString += "Name: " + drive['Name'] + "\n"
     capacityBytes = drive['CapacityBytes']
@@ -132,6 +131,14 @@ def get_adapter_objects(ip, username, password):
     for id in adapterIDs:
         adapters.append(json.loads(basic_request(ip, username, password, id).text))
     return adapters
+
+def print_adapter_info(adapter):
+    infoString = ""
+    infoString += "Name: " + adapter['Name'] + "\n"
+    infoString += "ID: " + str(adapter['Id']) + "\n"
+    infoString += "Location: " + adapter['Location'] + "\n"
+    print(infoString)
+    
 
 
     
