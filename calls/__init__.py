@@ -6,6 +6,8 @@ from .functions import get_adapter_info
 from .functions import get_drive_info
 from .functions import get_drive_objects
 from .functions import get_storage_objects
+from .functions import get_memory_sums
+from .functions import get_memory_info
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -17,6 +19,10 @@ if response.status_code == 200:
     print("Response Successful \n")
 else:
     print("response unsuccessful with status code: \n", response.status_code)
+
+sums = get_memory_sums(ip, username, password)
+for sum in sums:
+    print(get_memory_info(sum))
 
 adapters = get_adapter_objects(ip, username, password)
 for adapter in adapters:

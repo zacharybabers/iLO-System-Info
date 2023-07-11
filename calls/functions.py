@@ -23,7 +23,7 @@ def get_system_objects(ip, username, password):
     return systems
 
 
-def get_memory_info(ip, username, password):
+def get_memory_sums(ip, username, password):
     memorySums = []
     systems = get_system_objects(ip, username, password)
     for system in systems:
@@ -32,6 +32,14 @@ def get_memory_info(ip, username, password):
 
 # A memory summary looks like:
 # {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': x, 'TotalSystemPersistentMemoryGiB': 0}
+
+def get_memory_info(memorySum):
+    infoString = ""
+    infoString += "Status: " + memorySum['Status']['HealthRollup'] + "\n"
+    infoString += "Total System Memory: " + str(memorySum['TotalSystemMemoryGiB']) + "\n"
+    infoString += "Total System Persistent Memory: " + str(memorySum['TotalSystemPersistentMemoryGiB']) + "\n"
+    return infoString
+
 
 
 def get_model_name(ip,username,password):
