@@ -194,6 +194,13 @@ def get_adapter_info(adapter):
         infoString += "Port \n"
         infoString += get_port_info(port)
     return infoString
+
+def adapter_info_dump(ip, username, password):
+    adapters = get_adapter_objects(ip, username, password)
+    out = ""
+    for adapter in adapters:
+        out += get_adapter_info(adapter)
+    return out
     
 
 
