@@ -64,14 +64,14 @@ def get_processor_objects(ip, username, password):
         processors.append(json.loads(basic_request(ip, username, password, id).text))
     return processors
 
-def print_processor_info(processor):
+def get_processor_info(processor):
     infoString = ""
     infoString += "Model: " + processor['Model'] + "\n"
     infoString += "Socket: " + processor['Socket'] + "\n"
     infoString += "Total Cores: " + str(processor['TotalCores']) + "\n"
     infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
     infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
-    print(infoString)
+    return(infoString)
 
 def get_storageIDs(ip, username, password):
     storageIDs = []
@@ -100,7 +100,7 @@ def get_drive_objects(ip, username, password, storage):
         drives.append(json.loads(basic_request(ip, username, password, id).text))
     return drives
 
-def print_drive_info(drive):
+def get_drive_info(drive):
     infoString = ""
     infoString += "Name: " + drive['Name'] + "\n"
     capacityBytes = drive['CapacityBytes']
@@ -110,7 +110,7 @@ def print_drive_info(drive):
         infoString += "Capacity GB: " + str(capacityGB) + "\n"
     infoString += "Physical Location: " + drive['PhysicalLocation']['PartLocation']['ServiceLabel'] + "\n"
     infoString += "Ordinal Location: " + str(drive['PhysicalLocation']['PartLocation']['LocationOrdinalValue']) + "\n"
-    print(infoString)
+    return(infoString)
 
 # Network Interface functions; there are currently no network interfaces being returned by our iLO, so I will just display the number of network interfaces so it is apparent if/when this functionality needs to be added
 def get_network_interface_count(ip, username, password):
@@ -136,7 +136,7 @@ def get_adapter_ports(adapter):
     ports = adapter['PhysicalPorts']
     return ports
 
-def print_port_info(port):
+def get_port_info(port):
     infoString = ""
     ipv4 = port['IPv4Addresses']
     if(len(ipv4) > 0):
@@ -152,18 +152,18 @@ def print_port_info(port):
         infoString += "IPV6 Address: None \n"
     infoString += "Mac Address: " + str(port['MacAddress']) + "\n"
     infoString += "Speed Mbps: " + str(port['SpeedMbps']) + "\n"
-    print(infoString)
+    return(infoString)
 
-def print_adapter_info(adapter):
+def get_adapter_info(adapter):
     infoString = ""
     infoString += "Name: " + adapter['Name'] + "\n"
     infoString += "ID: " + str(adapter['Id']) + "\n"
     infoString += "Location: " + adapter['Location'] + "\n"
     ports = get_adapter_ports(adapter)
-    print(infoString)
     for port in ports:
-        print("Port of " + adapter['Name'])
-        print_port_info(port)
+        infoString += "Port of " + adapter['Name'] + "\n"
+        infoString += get_port_info(port)
+    return infoString
     
 
 

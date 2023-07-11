@@ -2,7 +2,7 @@ import requests
 import warnings
 from .functions import basic_request
 from .functions import get_adapter_objects
-from .functions import print_adapter_info
+from .functions import get_adapter_info
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -17,6 +17,6 @@ else:
 
 adapters = get_adapter_objects(ip, username, password)
 for adapter in adapters:
-    print_adapter_info(adapter)
+    print(get_adapter_info)
 
 # get all the information
