@@ -162,6 +162,7 @@ def print_adapter_info(adapter):
     ports = get_adapter_ports(adapter)
     print(infoString)
     for port in ports:
+        print("Port of " + adapter['Name'])
         print_port_info(port)
     
 
