@@ -14,6 +14,7 @@ if response.status_code == 200:
 else:
     print("response unsuccessful with status code: ", response.status_code)
 
-print(get_adapter_objects(ip, username, password))
+print("the number of network adapters this ip has is: ")
+print(len(get_adapter_objects(ip, username, password)))
 
 # get all the information
