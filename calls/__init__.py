@@ -16,7 +16,6 @@ else:
     print("response unsuccessful with status code: \n", response.status_code)
 
 adapters = get_adapter_objects(ip, username, password)
-for adapter in adapters:
-    print(get_adapter_ports(adapter)[0])
+print(adapters[0])
 
 # get all the information
