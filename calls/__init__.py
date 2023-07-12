@@ -1,5 +1,6 @@
 import requests
 import warnings
+import sys
 from .functions import basic_request
 from .functions import adapter_info_dump
 from .functions import drive_info_dump
@@ -7,7 +8,6 @@ from .functions import mem_info_dump
 from .functions import processor_info_dump
 from .functions import model_info_dump
 
-exit
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
 password = input("Enter iLO Password: ")
@@ -18,12 +18,28 @@ if response.status_code == 200:
     print("Response Successful \n")
 else:
     print("response unsuccessful with status code: \n", response.status_code)
-    exit
+    sys.exit()
+
+optionsString = "What information do you want printed? \n Options: \n memory, cpu, network, storage, all"
+printMode = input(optionsString)
 
 print(model_info_dump(ip, username, password))
-print(mem_info_dump(ip, username, password))
-print(processor_info_dump(ip, username, password))
-print(adapter_info_dump(ip, username, password))
-print(drive_info_dump(ip, username, password))
+gotOut = False
+if printMode == "memory" or printMode == "all":
+    gotOut = True
+    print(mem_info_dump(ip, username, password))
+if printMode == "cpu" or printMode == "all":
+    gotOut = True
+    print(processor_info_dump(ip, username, password))
+if printMode == "network" or printMode == "all":
+    gotOut = True
+    print(adapter_info_dump(ip, username, password))
+if printMode == "storage" or printMode == "all":
+    gotOut = True
+    print(drive_info_dump(ip, username, password))
+
+if not gotOut:
+    print("invalid print mode")
+
 
 # TODO ADD MULTIPLE LANES OF SELECTION TO PROGRAM
