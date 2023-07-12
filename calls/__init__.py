@@ -20,7 +20,7 @@ else:
     print("response unsuccessful with status code: \n", response.status_code)
     sys.exit()
 
-optionsString = "What information do you want printed? \n Options: \n memory, cpu, network, storage, all"
+optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
 printMode = input(optionsString)
 
 print(model_info_dump(ip, username, password))
