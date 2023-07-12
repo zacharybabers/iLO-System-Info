@@ -40,7 +40,7 @@ if printMode == "storage" or printMode == "all":
     print(drive_info_dump(ip, username, password))
 
 if not gotOut:
-    print("invalid print mode")
+    print("Invalid Print Mode")
 
 
 # TODO ADD MULTIPLE LANES OF SELECTION TO PROGRAM
