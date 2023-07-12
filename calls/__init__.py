@@ -35,6 +35,13 @@ elif printMode == "network":
 elif printMode == "storage":
     print(drive_info_dump(ip, username, password))
 elif printMode == "all":
-    print("hi")
+    print("Memory: \n")
+    print(mem_info_dump(ip, username, password))
+    print("Processors: \n")
+    print(processor_info_dump(ip, username, password))
+    print("Network Adapters: \n")
+    print(adapter_info_dump(ip, username, password))
+    print("Drives: \n")
+    print(drive_info_dump(ip, username, password))
 else:
     print("Invalid Print Mode")
