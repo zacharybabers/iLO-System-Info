@@ -92,6 +92,8 @@ def get_processor_info(processor):
     infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
     if('InstructionSet' in processor.keys()):
         infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
+    else:
+        infoString += "Instruction set unavailable \n"
     return(infoString)
 
 def processor_info_dump(ip, username, password):
