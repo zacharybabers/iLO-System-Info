@@ -23,6 +23,7 @@ else:
 optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
 printMode = input(optionsString)
 
+print("\n")
 print(model_info_dump(ip, username, password))
 gotOut = False
 if printMode == "memory" or printMode == "all":
