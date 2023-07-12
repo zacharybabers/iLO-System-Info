@@ -41,6 +41,3 @@ if printMode == "storage" or printMode == "all":
 
 if not gotOut:
     print("Invalid Print Mode")
-
-
-# TODO ADD MULTIPLE LANES OF SELECTION TO PROGRAM
