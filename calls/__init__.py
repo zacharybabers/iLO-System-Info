@@ -25,19 +25,16 @@ printMode = input(optionsString)
 
 print("\n")
 print(model_info_dump(ip, username, password))
-gotOut = False
-if printMode == "memory" or printMode == "all":
-    gotOut = True
-    print(mem_info_dump(ip, username, password))
-if printMode == "cpu" or printMode == "all":
-    gotOut = True
-    print(processor_info_dump(ip, username, password))
-if printMode == "network" or printMode == "all":
-    gotOut = True
-    print(adapter_info_dump(ip, username, password))
-if printMode == "storage" or printMode == "all":
-    gotOut = True
-    print(drive_info_dump(ip, username, password))
 
-if not gotOut:
+if printMode == "memory":
+    print(mem_info_dump(ip, username, password))
+elif printMode == "cpu":
+    print(processor_info_dump(ip, username, password))
+elif printMode == "network":
+    print(adapter_info_dump(ip, username, password))
+elif printMode == "storage":
+    print(drive_info_dump(ip, username, password))
+elif printMode == "all":
+    print("hi")
+else:
     print("Invalid Print Mode")
