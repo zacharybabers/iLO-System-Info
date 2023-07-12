@@ -23,7 +23,7 @@ def get_system_objects(ip, username, password):
     return systems
 
 
-def get_memory_info(ip, username, password):
+def get_memory_sums(ip, username, password):
     memorySums = []
     systems = get_system_objects(ip, username, password)
     for system in systems:
@@ -33,6 +33,19 @@ def get_memory_info(ip, username, password):
 # A memory summary looks like:
 # {'Status': {'HealthRollup': 'OK'}, 'TotalSystemMemoryGiB': x, 'TotalSystemPersistentMemoryGiB': 0}
 
+def get_memory_info(memorySum):
+    infoString = ""
+    infoString += "Status: " + memorySum['Status']['HealthRollup'] + "\n"
+    infoString += "Total System Memory: " + str(memorySum['TotalSystemMemoryGiB']) + "\n"
+    infoString += "Total System Persistent Memory: " + str(memorySum['TotalSystemPersistentMemoryGiB']) + "\n"
+    return infoString
+
+def mem_info_dump(ip, username, password):
+    out = ""
+    sums = get_memory_sums(ip, username, password)
+    for sum in sums:
+        out += get_memory_info(sum)
+    return out
 
 def get_model_name(ip,username,password):
     names = []
@@ -40,6 +53,13 @@ def get_model_name(ip,username,password):
     for system in systems:
         names.append(system['Model'])
     return names
+
+def model_info_dump(ip, username, password):
+    names = get_model_name(ip, username, password)
+    out = ""
+    for name in names:
+        out += name + "\n"
+    return out
 
 def get_cpu_summary(ip, username, password):
     cpuSums = []
@@ -64,14 +84,24 @@ def get_processor_objects(ip, username, password):
         processors.append(json.loads(basic_request(ip, username, password, id).text))
     return processors
 
-def print_processor_info(processor):
+def get_processor_info(processor):
     infoString = ""
     infoString += "Model: " + processor['Model'] + "\n"
     infoString += "Socket: " + processor['Socket'] + "\n"
     infoString += "Total Cores: " + str(processor['TotalCores']) + "\n"
     infoString += "Total Threads: " + str(processor['TotalThreads']) + "\n"
-    infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
-    print(infoString)
+    if('InstructionSet' in processor.keys()):
+        infoString += "Instruction Set: " + processor['InstructionSet'] + "\n"
+    else:
+        infoString += "Instruction set unavailable \n"
+    return(infoString)
+
+def processor_info_dump(ip, username, password):
+    processors = get_processor_objects(ip, username, password)
+    out = ""
+    for processor in processors:
+        out += get_processor_info(processor)
+    return out
 
 def get_storageIDs(ip, username, password):
     storageIDs = []
@@ -100,8 +130,7 @@ def get_drive_objects(ip, username, password, storage):
         drives.append(json.loads(basic_request(ip, username, password, id).text))
     return drives
 
-def print_drive_info(drive):
-    # name
+def get_drive_info(drive):
     infoString = ""
     infoString += "Name: " + drive['Name'] + "\n"
     capacityBytes = drive['CapacityBytes']
@@ -111,7 +140,16 @@ def print_drive_info(drive):
         infoString += "Capacity GB: " + str(capacityGB) + "\n"
     infoString += "Physical Location: " + drive['PhysicalLocation']['PartLocation']['ServiceLabel'] + "\n"
     infoString += "Ordinal Location: " + str(drive['PhysicalLocation']['PartLocation']['LocationOrdinalValue']) + "\n"
-    print(infoString)
+    return(infoString)
+
+def drive_info_dump(ip, username, password):
+    storages = get_storage_objects(ip, username, password)
+    out = ""
+    for storage in storages:
+        drives = get_drive_objects(ip, username, password, storage)
+        for drive in drives:
+            out += get_drive_info(drive)
+    return out
 
 # Network Interface functions; there are currently no network interfaces being returned by our iLO, so I will just display the number of network interfaces so it is apparent if/when this functionality needs to be added
 def get_network_interface_count(ip, username, password):
@@ -132,6 +170,47 @@ def get_adapter_objects(ip, username, password):
     for id in adapterIDs:
         adapters.append(json.loads(basic_request(ip, username, password, id).text))
     return adapters
+
+def get_adapter_ports(adapter):
+    ports = adapter['PhysicalPorts']
+    return ports
+
+def get_port_info(port):
+    infoString = ""
+    ipv4 = port['IPv4Addresses']
+    if(len(ipv4) > 0):
+        for address in ipv4:
+            infoString += "IPV4 Address: " + str(address) + "\n"
+    else:
+        infoString += "IPV4 Address: None \n"
+    ipv6 = port['IPv6Addresses']
+    if(len(ipv6) > 0):
+        for address in ipv6:
+                infoString += "IPV6 Address: " + str(address) + "\n"
+    else:
+        infoString += "IPV6 Address: None \n"
+    infoString += "Mac Address: " + str(port['MacAddress']) + "\n"
+    infoString += "Speed Mbps: " + str(port['SpeedMbps']) + "\n"
+    return(infoString)
+
+def get_adapter_info(adapter):
+    infoString = ""
+    infoString += "Name: " + adapter['Name'] + "\n"
+    infoString += "ID: " + str(adapter['Id']) + "\n"
+    infoString += "Location: " + adapter['Location'] + "\n"
+    ports = get_adapter_ports(adapter)
+    for port in ports:
+        infoString += "Port \n"
+        infoString += get_port_info(port)
+    return infoString
+
+def adapter_info_dump(ip, username, password):
+    adapters = get_adapter_objects(ip, username, password)
+    out = ""
+    for adapter in adapters:
+        out += get_adapter_info(adapter)
+    return out
+    
 
 
     
