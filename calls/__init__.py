@@ -7,6 +7,7 @@ from .functions import drive_info_dump
 from .functions import mem_info_dump
 from .functions import processor_info_dump
 from .functions import model_info_dump
+from .functions import get_network_interface_count
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -41,6 +42,7 @@ elif printMode == "all":
     print(processor_info_dump(ip, username, password))
     print("Network Adapters: \n")
     print(adapter_info_dump(ip, username, password))
+    print("Redfish shows " + get_network_interface_count(ip, username, password) + " network interfaces. \n")
     print("Drives: \n")
     print(drive_info_dump(ip, username, password))
 else:
