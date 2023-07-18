@@ -8,6 +8,7 @@ from .functions import mem_info_dump
 from .functions import processor_info_dump
 from .functions import model_info_dump
 from .functions import interface_info_dump
+from .functions import get_network_interface_count
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -33,6 +34,7 @@ elif printMode == "cpu":
     print(processor_info_dump(ip, username, password))
 elif printMode == "network":
     print(adapter_info_dump(ip, username, password))
+    print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)))
     print(interface_info_dump(ip, username, password))
 elif printMode == "storage":
     print(drive_info_dump(ip, username, password))
