@@ -42,7 +42,7 @@ elif printMode == "all":
     print(processor_info_dump(ip, username, password))
     print("Network Adapters: \n")
     print(adapter_info_dump(ip, username, password))
-    print("Redfish shows " + get_network_interface_count(ip, username, password) + " network interfaces. \n")
+    print("Redfish shows " + str(get_network_interface_count(ip, username, password)) + " network interfaces. \n")
     print("Drives: \n")
     print(drive_info_dump(ip, username, password))
 else:
