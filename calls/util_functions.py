@@ -41,6 +41,12 @@ def ip_last_num(input_string):
     else:
         return input_string
     
-def process_file(arg):
-    print(arg)
-    return 0
+def process_file(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = [next(file) for _ in range(3)]
+        
+        for line in lines:
+            print(line.strip())
+    except FileNotFoundError:
+        print("File not found: " + file_path)
