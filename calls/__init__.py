@@ -7,6 +7,9 @@ from .functions import drive_info_dump
 from .functions import mem_info_dump
 from .functions import processor_info_dump
 from .functions import model_info_dump
+from .functions import interface_info_dump
+from .functions import get_network_interface_count
+from .functions import get_nic_pci_address
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -32,6 +35,9 @@ elif printMode == "cpu":
     print(processor_info_dump(ip, username, password))
 elif printMode == "network":
     print(adapter_info_dump(ip, username, password))
+    print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)) + "\n")
+    for address in get_nic_pci_address(ip, username, password):
+        print(address + "\n")
 elif printMode == "storage":
     print(drive_info_dump(ip, username, password))
 elif printMode == "all":
@@ -41,7 +47,12 @@ elif printMode == "all":
     print(processor_info_dump(ip, username, password))
     print("Network Adapters: \n")
     print(adapter_info_dump(ip, username, password))
+    print("Network Interfaces: \n")
+    for address in get_nic_pci_address(ip, username, password):
+        print(address + "\n")
     print("Drives: \n")
     print(drive_info_dump(ip, username, password))
+# elif printMode == "dev":
+#     print(str(get_nic_pci_address(ip, username, password)))
 else:
     print("Invalid Print Mode")

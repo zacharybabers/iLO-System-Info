@@ -156,6 +156,26 @@ def get_network_interface_count(ip, username, password):
     interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
     return interfaces['Members@odata.count']
 
+def get_interfaceIDs(ip, username, password):
+    interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
+    driveIDs = []
+    for id in interfaces['Members']:
+        driveIDs.append(id['@odata.id'])
+    return driveIDs
+
+def get_interface_objects(ip, username, password):
+    interfaces = []
+    interfaceIDs = get_interfaceIDs(ip, username, password)
+    for id in interfaceIDs:
+        interfaces.append(json.loads(basic_request(ip, username, password, id).text))
+    return interfaces
+
+def interface_info_dump(ip, username, password):
+    interfaces = get_interface_objects(ip, username, password)
+    infoString = ""
+    for interface in interfaces:
+        infoString+=str(interface)
+    return infoString
 ####
 def get_adapterIDs(ip, username, password):
     adapters = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/BaseNetworkAdapters").text)
@@ -211,6 +231,36 @@ def adapter_info_dump(ip, username, password):
         out += get_adapter_info(adapter)
     return out
     
+def get_pciIDs(ip, username, password):
+    devices = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/pcidevices").text)
+    deviceIDs = []
+    for id in devices['Members']:
+        deviceIDs.append(id['@odata.id'])
+    return deviceIDs
+
+def get_pci_objects(ip, username, password):
+    devices = []
+    IDs = get_pciIDs(ip, username, password)
+    for id in IDs:
+        devices.append(json.loads(basic_request(ip, username, password, id).text))
+    return devices
+
+def get_nic_pci_address(ip, username, password):
+    devices = get_pci_objects(ip, username, password)
+    nics = []
+    for device in devices:
+        if(device['DeviceType'] == 'NIC'):
+            nics.append(device)
+    out = []
+    for nic in nics:
+        pcistring = ""
+        pcistring += "0000:"
+        pcistring += str(nic['BusNumber']) + ":"
+        pcistring += str(nic['DeviceNumber']) + "."
+        pcistring += str(nic['FunctionNumber'])
+        out.append(nic['Name'] + " PCI Address: " + pcistring)
+    return out
+
 
 
     
