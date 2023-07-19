@@ -51,6 +51,6 @@ elif printMode == "all":
     print("Drives: \n")
     print(drive_info_dump(ip, username, password))
 elif printMode == "dev":
-    print(get_pciIDs(ip, username, password))
+    print(str(get_pciIDs(ip, username, password)))
 else:
     print("Invalid Print Mode")
