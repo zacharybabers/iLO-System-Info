@@ -174,7 +174,7 @@ def interface_info_dump(ip, username, password):
     interfaces = get_interface_objects(ip, username, password)
     infoString = ""
     for interface in interfaces:
-        infoString+=str(interface)
+        infoString+="Interface Name: " + interface["Name"] + "\n"
     return infoString
 ####
 def get_adapterIDs(ip, username, password):

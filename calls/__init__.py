@@ -7,7 +7,6 @@ from .functions import drive_info_dump
 from .functions import mem_info_dump
 from .functions import processor_info_dump
 from .functions import model_info_dump
-from .functions import interface_info_dump
 from .functions import get_network_interface_count
 from .functions import get_nic_pci_address
 
