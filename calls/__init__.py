@@ -10,7 +10,7 @@ from .redfish_functions import model_info_dump
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_nic_pci_address
 
-print(get_ips(input("enter list")))
+print(get_ips(input("enter stuff \n")))
 sys.exit()
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
