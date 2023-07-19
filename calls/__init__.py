@@ -18,6 +18,7 @@ print("arguments: " + str(sys.argv))
 ipList = []
 username = ""
 password = ""
+printMode = ""
 
 if num_arguments == 0:
     ipList = get_ips(input("Enter iLO IPs: "))
@@ -28,6 +29,7 @@ elif num_arguments == 1:
     ipList = get_ips(credentials[0])
     username = credentials[1]
     password = credentials[2]
+    printMode = credentials[3]
 else:
     print("Invalid num arguments")
     sys.exit()
@@ -44,9 +46,9 @@ for i in range(0, len(responses)):
 
 print("All redfish responses successful.")
 
-
-optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
-printMode = input(optionsString)
+if num_arguments == 0:     
+    optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
+    printMode = input(optionsString)
 
 print("\n")
 
