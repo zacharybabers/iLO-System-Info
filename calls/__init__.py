@@ -35,7 +35,7 @@ elif printMode == "cpu":
     print(processor_info_dump(ip, username, password))
 elif printMode == "network":
     print(adapter_info_dump(ip, username, password))
-    print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)))
+    print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)) + "\n")
     for address in get_nic_pci_address(ip, username, password):
         print(address + "\n")
 elif printMode == "storage":
