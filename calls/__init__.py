@@ -25,7 +25,7 @@ if num_arguments == 0:
     password = getpass.getpass("Enter iLO Password: ")
 elif num_arguments == 1:
     credentials = process_file(sys.argv[1])
-    ipList = credentials[0]
+    ipList = get_ips(credentials[0])
     username = credentials[1]
     password = credentials[2]
 else:
