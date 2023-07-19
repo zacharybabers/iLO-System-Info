@@ -13,6 +13,7 @@ from .redfish_functions import get_nic_pci_address
 
 num_arguments = len(sys.argv) - 1
 print("number of arguments: " + str(num_arguments))
+print("arguments: " + sys.argv)
 ipList = []
 username = ""
 password = ""
