@@ -5,11 +5,21 @@ def get_ips(ipString):
     ipStrings = []
 
     for string in initStrings:
+        myList = string.split('-')
+        if len(myList == 2):
+            valid = is_valid_ip_address(myList[0]) and myList[1].isdigit()
+            if valid:
+                lastNum = ip_last_num(myList[0])
+                for i in range (int(lastNum), int(myList[1])):
+                    initStrings.append(myList[0][0:myList[0].rfind('.')] + "i")
+
+
+    for string in initStrings:
         stripped = string.strip()
         if (is_valid_ip_address(stripped)):
             ipStrings.append(stripped)
 
-    return ipStrings
+    return list(set(ipStrings))
 
 def is_valid_ip_address(input_string):
     ip_address_pattern = r'^(\d{1,3}\.){3}\d{1,3}$'
@@ -21,3 +31,10 @@ def is_valid_ip_address(input_string):
             return True
 
     return False
+
+def ip_last_num(input_string):
+    parts = input_string.rsplit('.', 1)
+    if len(parts) > 1:
+        return parts[-1]
+    else:
+        return input_string
