@@ -48,7 +48,6 @@ elif printMode == "all":
     print("Network Adapters: \n")
     print(adapter_info_dump(ip, username, password))
     print("Network Interfaces: \n")
-    print(interface_info_dump(ip, username, password))
     for address in get_nic_pci_address(ip, username, password):
         print(address + "\n")
     print("Drives: \n")
