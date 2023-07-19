@@ -5,9 +5,9 @@ def get_ips(ipString):
     ipStrings = []
 
     for string in initStrings:
-        string = string.strip()
-        if (is_valid_ip_address(string)):
-            ipStrings.append(string)
+        stripped = string.strip()
+        if (is_valid_ip_address(stripped)):
+            ipStrings.append(stripped)
 
     return ipStrings
 
