@@ -5,7 +5,7 @@ import json
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False))
+        response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False, timeout=5))
     return response
 
 def get_systemIDs(ip, username, password):
