@@ -255,9 +255,9 @@ def get_nic_pci_address(ip, username, password):
     for nic in nics:
         pcistring = ""
         pcistring += "0000:"
-        pcistring += nic['BusNumber'] + ":"
-        pcistring += nic['DeviceNumber'] + "."
-        pcistring += nic['FunctionNumber']
+        pcistring += str(nic['BusNumber']) + ":"
+        pcistring += str(nic['DeviceNumber']) + "."
+        pcistring += str(nic['FunctionNumber'])
         out.append(nic['Name'] + " PCI Address: " + pcistring)
     return out
 
