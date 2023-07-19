@@ -11,7 +11,6 @@ def get_ips(ipString):
     for string in initStrings:
         myList = string.split('-')
         if len(myList) == 2:
-            print("hi")
             valid = is_valid_ip_address(myList[0]) and myList[1].isdigit()
             if valid:
                 lastNum = ip_last_num(myList[0])
