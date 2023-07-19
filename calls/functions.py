@@ -235,7 +235,7 @@ def get_pciIDs(ip, username, password):
     devices = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/pcidevices").text)
     deviceIDs = []
     for id in devices['Members']:
-        deviceIDs.append(json.loads(basic_request(ip, username, password, id).text))
+        deviceIDs.append(id['@odata.id'])
     return deviceIDs
 
 
