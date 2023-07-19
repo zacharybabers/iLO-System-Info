@@ -21,42 +21,45 @@ for ip in ipList:
 
 for i in range(0, len(responses)):
     if(not responses[i].status_code == 200):
-        print("response unsuccesful from ip " + ipList[i] +". Exiting the program")
+        print("response unsuccesful from ip " + ipList[i] +". Response code: " + responses[i].status_code +  ". Exiting the program")
         sys.exit()
 
-print("responses successful")
-sys.exit()
+print("All redfish responses successful.")
+
 
 optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
 printMode = input(optionsString)
 
 print("\n")
-print(model_info_dump(ip, username, password))
 
-if printMode == "memory":
-    print(mem_info_dump(ip, username, password))
-elif printMode == "cpu":
-    print(processor_info_dump(ip, username, password))
-elif printMode == "network":
-    print(adapter_info_dump(ip, username, password))
-    print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)) + "\n")
-    for address in get_nic_pci_address(ip, username, password):
-        print(address + "\n")
-elif printMode == "storage":
-    print(drive_info_dump(ip, username, password))
-elif printMode == "all":
-    print("Memory: \n")
-    print(mem_info_dump(ip, username, password))
-    print("Processors: \n")
-    print(processor_info_dump(ip, username, password))
-    print("Network Adapters: \n")
-    print(adapter_info_dump(ip, username, password))
-    print("Network Interfaces: \n")
-    for address in get_nic_pci_address(ip, username, password):
-        print(address + "\n")
-    print("Drives: \n")
-    print(drive_info_dump(ip, username, password))
-# elif printMode == "dev":
-#     print(str(get_nic_pci_address(ip, username, password)))
-else:
-    print("Invalid Print Mode")
+for ip in ipList:
+    print("Server at IP " + ip + ": \n")
+    print(model_info_dump(ip, username, password))
+
+    if printMode == "memory":
+        print(mem_info_dump(ip, username, password))
+    elif printMode == "cpu":
+        print(processor_info_dump(ip, username, password))
+    elif printMode == "network":
+        print(adapter_info_dump(ip, username, password))
+        print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)) + "\n")
+        for address in get_nic_pci_address(ip, username, password):
+            print(address + "\n")
+    elif printMode == "storage":
+        print(drive_info_dump(ip, username, password))
+    elif printMode == "all":
+        print("Memory: \n")
+        print(mem_info_dump(ip, username, password))
+        print("Processors: \n")
+        print(processor_info_dump(ip, username, password))
+        print("Network Adapters: \n")
+        print(adapter_info_dump(ip, username, password))
+        print("Network Interfaces: \n")
+        for address in get_nic_pci_address(ip, username, password):
+            print(address + "\n")
+        print("Drives: \n")
+        print(drive_info_dump(ip, username, password))
+    # elif printMode == "dev":
+    #     print(str(get_nic_pci_address(ip, username, password)))
+    else:
+        print("Invalid Print Mode")
