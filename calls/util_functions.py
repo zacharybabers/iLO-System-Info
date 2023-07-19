@@ -1,7 +1,11 @@
 import re
 
 def get_ips(ipString):
-    initStrings = ipString.split(',')
+    rawStrings = ipString.split(',')
+    initStrings = []
+    for string in rawStrings:
+        init = string.strip()
+        initStrings.append(init)
     ipStrings = []
 
     for string in initStrings:
