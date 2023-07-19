@@ -40,3 +40,7 @@ def ip_last_num(input_string):
         return parts[-1]
     else:
         return input_string
+    
+def process_file(arg):
+    print(arg)
+    return 0

@@ -1,6 +1,7 @@
 import getpass
 import sys
 from .util_functions import get_ips
+from .util_functions import process_file
 from .redfish_functions import basic_request
 from .redfish_functions import adapter_info_dump
 from .redfish_functions import drive_info_dump
@@ -23,7 +24,7 @@ if num_arguments == 0:
     username = input("Enter iLO Username: ")
     password = getpass.getpass("Enter iLO Password: ")
 elif num_arguments == 1:
-    print("doing my thing")
+    process_file(sys.argv[1])
     sys.exit()
 else:
     print("Invalid num arguments")
