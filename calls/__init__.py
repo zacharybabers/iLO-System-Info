@@ -24,7 +24,11 @@ if num_arguments == 0:
     username = input("Enter iLO Username: ")
     password = getpass.getpass("Enter iLO Password: ")
 elif num_arguments == 1:
-    process_file(sys.argv[1])
+    credentials = process_file(sys.argv[1])
+    ipList = credentials[0]
+    username = credentials[1]
+    password = credentials[2]
+    print(str(credentials))
     sys.exit()
 else:
     print("Invalid num arguments")

@@ -42,11 +42,14 @@ def ip_last_num(input_string):
         return input_string
     
 def process_file(file_path):
+    credentials = []
     try:
         with open(file_path, 'r') as file:
             lines = [next(file) for _ in range(3)]
         
         for line in lines:
-            print(line.strip())
+            credentials.append(line)
     except FileNotFoundError:
         print("File not found: " + file_path)
+    
+    return credentials
