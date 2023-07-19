@@ -174,7 +174,7 @@ def interface_info_dump(ip, username, password):
     interfaces = get_interface_objects(ip, username, password)
     infoString = ""
     for interface in interfaces:
-        infoString+=str(interface)
+        infoString+="Interface Name: " + interface["Name"] + "\n"
     return infoString
 ####
 def get_adapterIDs(ip, username, password):
@@ -255,9 +255,9 @@ def get_nic_pci_address(ip, username, password):
     for nic in nics:
         pcistring = ""
         pcistring += "0000:"
-        pcistring += str(nic['BusNumber']) + ":"
-        pcistring += str(nic['DeviceNumber']) + "."
-        pcistring += str(nic['FunctionNumber'])
+        pcistring += hex(nic['BusNumber'])[2:] + ":"
+        pcistring += hex(nic['DeviceNumber'])[2:] + "."
+        pcistring += hex(nic['FunctionNumber'])[2:]
         out.append(nic['Name'] + " PCI Address: " + pcistring)
     return out
 
