@@ -1,5 +1,6 @@
 import getpass
 import sys
+from .util_functions import get_ips
 from .redfish_functions import basic_request
 from .redfish_functions import adapter_info_dump
 from .redfish_functions import drive_info_dump
@@ -9,8 +10,8 @@ from .redfish_functions import model_info_dump
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_nic_pci_address
 
-ips = []
-
+print(get_ips(input("enter list")))
+sys.exit()
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
 password = getpass.getpass("Enter iLO Password: ")
