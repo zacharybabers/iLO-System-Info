@@ -1,5 +1,4 @@
-import requests
-import warnings
+import getpass
 import sys
 from .functions import basic_request
 from .functions import adapter_info_dump
@@ -12,7 +11,7 @@ from .functions import get_nic_pci_address
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
-password = input("Enter iLO Password: ")
+password = getpass.getpass("Enter iLO Password: ")
 
 response = basic_request(ip, username, password, "/redfish/v1/Systems")
 
