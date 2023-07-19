@@ -28,8 +28,6 @@ elif num_arguments == 1:
     ipList = credentials[0]
     username = credentials[1]
     password = credentials[2]
-    print(str(credentials))
-    sys.exit()
 else:
     print("Invalid num arguments")
     sys.exit()
