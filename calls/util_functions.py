@@ -48,7 +48,7 @@ def process_file(file_path):
             lines = [next(file) for _ in range(3)]
         
         for line in lines:
-            credentials.append(line)
+            credentials.append(line.strip())
     except FileNotFoundError:
         print("File not found: " + file_path)
     
