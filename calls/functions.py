@@ -238,5 +238,13 @@ def get_pciIDs(ip, username, password):
         deviceIDs.append(id['@odata.id'])
     return deviceIDs
 
+def get_pci_objects(ip, username, password):
+    devices = []
+    IDs = get_pciIDs(ip, username, password)
+    for id in IDs:
+        devices.append(json.loads(basic_request(ip, username, password, id).text))
+    return devices
+
+
 
     
