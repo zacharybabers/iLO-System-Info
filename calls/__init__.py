@@ -9,6 +9,7 @@ from .functions import processor_info_dump
 from .functions import model_info_dump
 from .functions import interface_info_dump
 from .functions import get_network_interface_count
+from .functions import get_pciIDs
 
 ip = input("Enter iLO IP: ")
 username = input("Enter iLO Username: ")
@@ -49,5 +50,7 @@ elif printMode == "all":
     print(interface_info_dump(ip, username, password))
     print("Drives: \n")
     print(drive_info_dump(ip, username, password))
+elif printMode == "dev":
+    print(get_pciIDs(ip, username, password))
 else:
     print("Invalid Print Mode")
