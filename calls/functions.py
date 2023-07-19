@@ -245,6 +245,14 @@ def get_pci_objects(ip, username, password):
         devices.append(json.loads(basic_request(ip, username, password, id).text))
     return devices
 
+def get_nic_pci_address(ip, username, password):
+    devices = get_pci_objects(ip, username, password)
+    nics = []
+    for device in devices:
+        if(device['DeviceType'] == 'NIC'):
+            nics.append(device)
+    return nics
+
 
 
     
