@@ -15,7 +15,7 @@ def get_ips(ipString):
             valid = is_valid_ip_address(myList[0]) and myList[1].isdigit()
             if valid:
                 lastNum = ip_last_num(myList[0])
-                for i in range (int(lastNum), int(myList[1])):
+                for i in range (int(lastNum), int(myList[1]) + 1):
                     initStrings.append(myList[0][0:(myList[0].rfind('.') + 1)] + str(i))
 
     print("intermittent list:", initStrings)
