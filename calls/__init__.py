@@ -10,19 +10,22 @@ from .redfish_functions import model_info_dump
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_nic_pci_address
 
-print(get_ips(input("enter stuff \n")))
-sys.exit()
-ip = input("Enter iLO IP: ")
+
+ipList = get_ips(input("Enter iLO IPs: "))
 username = input("Enter iLO Username: ")
 password = getpass.getpass("Enter iLO Password: ")
 
-response = basic_request(ip, username, password, "/redfish/v1/Systems")
+responses = []
+for ip in ipList:
+    responses.append(basic_request(ip, username, password, "/redfish/v1/Systems"))
 
-if response.status_code == 200:
-    print("Response Successful \n")
-else:
-    print("response unsuccessful with status code: \n", response.status_code)
-    sys.exit()
+for i in range(0, len(responses)):
+    if(not responses[i].status_code == 200):
+        print("response unsuccesful from ip " + ipList[i] +". Exiting the program")
+        sys.exit()
+
+print("responses successful")
+sys.exit()
 
 optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"
 printMode = input(optionsString)
