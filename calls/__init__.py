@@ -68,7 +68,7 @@ for ip in ipList:
         print(processor_info_dump(ip, username, password))
         print("Network Adapters: \n")
         print(adapter_info_dump(ip, username, password))
-        print("Network Interfaces: \n")
+        print("Network Interface Count: " + str(get_network_interface_count(ip, username, password)) + "\n")
         for address in get_nic_pci_address(ip, username, password):
             print(address + "\n")
         print("Drives: \n")
