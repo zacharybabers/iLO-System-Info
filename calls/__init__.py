@@ -10,6 +10,7 @@ from .redfish_functions import processor_info_dump
 from .redfish_functions import model_info_dump
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_nic_pci_address
+from .system_classes import populate_system
 
 num_arguments = len(sys.argv) - 1
 print("number of arguments: " + str(num_arguments))
@@ -34,6 +35,7 @@ else:
     sys.exit()
 
 
+
 responses = []
 for ip in ipList:
     responses.append(basic_request(ip, username, password, "/redfish/v1/Systems"))
@@ -44,6 +46,12 @@ for i in range(0, len(responses)):
         sys.exit()
 
 print("All redfish responses successful.")
+
+system1 = populate_system(ipList[0], username, password)
+
+print(str(system1))
+
+sys.exit()
 
 if num_arguments == 0:     
     optionsString = "What information do you want printed? \nOptions: \nmemory, cpu, network, storage, all \n"

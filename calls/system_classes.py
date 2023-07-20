@@ -1,4 +1,12 @@
+
 from .redfish_functions import get_adapter_ports
+from .redfish_functions import get_memory_sums
+from .redfish_functions import get_processor_objects
+from .redfish_functions import get_storage_objects
+from .redfish_functions import get_drive_objects
+from .redfish_functions import get_adapter_objects
+from .redfish_functions import get_pci_objects
+from .redfish_functions import get_network_interface_count
 
 class ComputerSystem:
     def __init__(self, memInfo, processors, drives, nics, interfaceCount):
@@ -73,3 +81,38 @@ class PortInfo:
                 self.ipv6Addresses.append(address)
         self.macAddress = port.get('MacAddress', "Unavailable")
         self.speedMbps = port.get('SpeedMbps', "Unavailable")
+
+# write a function to populate a system given credentials
+def populate_system(ip, username, password):
+
+    # Memory
+    sums = get_memory_sums(ip, username, password)
+    if not len(sums == 1):
+        print(f"System at ip {ip} has wrong number of memory sums.")
+    memoryInfo = MemoryInfo(sums[0])
+
+    # CPU
+    processors = []
+    objs = get_processor_objects(ip, username, password)
+    for obj in objs:
+        processors.append(ProcessorInfo(obj))
+
+    # Drives
+    storages = get_storage_objects(ip, username, password)
+    if not len(storages == 1):
+        print(f"System at ip {ip} has wrong number of storages.")
+    drives = get_drive_objects(ip, username, password, storages[0])
+    driveInfos = []
+    for drive in drives:
+        driveInfos.append(DriveInfo(drive))
+
+    # NICs
+    devices = get_pci_objects(ip, username, password)
+    adapters = get_adapter_objects(ip, username, password)
+    nics = []
+    for adapter in adapters:
+        nics.append(NetworkAdapterInfo(adapter, devices))
+    
+    return ComputerSystem(memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
+    
+    
