@@ -1,5 +1,4 @@
 XXX.XXX.XXX.XXX
 username
 password
-printmode (memory, cpu, network, storage, all)
 
