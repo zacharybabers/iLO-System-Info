@@ -57,8 +57,8 @@ class NetworkAdapterInfo:
     def pciAddress(self, devices):
         address = ""
         for device in devices:
+            print(device.get('name'), unavailable)
             if device.get('name', 'unavailable') == self.name:
-                print("gotem")
                 address += "0000:"
                 address += hex(device.get('BusNumber'))[2:] + ":"
                 address += hex(device.get('DeviceNumber'))[2:] + ":"
