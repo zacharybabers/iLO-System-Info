@@ -24,6 +24,14 @@ class MemoryInfo:
         self.totalMem = str(memorySum.get('TotalSystemMemoryGiB', "Unavailable"))
         self.persistentMem = str(memorySum.get('TotalSystemPersistentMemoryGiB', "Unavailable"))
 
+    def __str__(self):
+        infoString = ""
+        infoString += "Status: " + self.status + "\n"
+        infoString += "Total System Memory: " + self.totalMem + "\n"
+        infoString += "Total System Persistent Memory: " + self.persistentMem + "\n"
+        return infoString
+
+
 
 class ProcessorInfo:
     def __init__(self, processor):
