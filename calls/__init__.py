@@ -49,7 +49,7 @@ print("All redfish responses successful.")
 
 system1 = populate_system(ipList[0], username, password)
 
-print(str(system1.model))
+print(str(system1.networkAdapterList[0].PciAddress))
 
 sys.exit()
 
