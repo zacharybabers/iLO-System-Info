@@ -58,6 +58,7 @@ class NetworkAdapterInfo:
         address = ""
         for device in devices:
             if device.get('name', 'unavailable') == self.name:
+                print("gotem")
                 address += "0000:"
                 address += hex(device.get('BusNumber'))[2:] + ":"
                 address += hex(device.get('DeviceNumber'))[2:] + ":"
