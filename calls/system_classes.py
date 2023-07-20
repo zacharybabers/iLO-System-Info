@@ -102,6 +102,7 @@ class NetworkAdapterInfo:
         for port in ports:
             infoString += "Port \n"
             infoString += str(port)
+        infoString += "PCI Address: " + self.PciAddress + "\n"
         return infoString
 
 
