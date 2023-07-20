@@ -87,7 +87,7 @@ def populate_system(ip, username, password):
 
     # Memory
     sums = get_memory_sums(ip, username, password)
-    if not len(sums == 1):
+    if not (len(sums) == 1):
         print(f"System at ip {ip} has wrong number of memory sums.")
     memoryInfo = MemoryInfo(sums[0])
 
@@ -99,7 +99,7 @@ def populate_system(ip, username, password):
 
     # Drives
     storages = get_storage_objects(ip, username, password)
-    if not len(storages == 1):
+    if not (len(storages) == 1):
         print(f"System at ip {ip} has wrong number of storages.")
     drives = get_drive_objects(ip, username, password, storages[0])
     driveInfos = []
