@@ -42,7 +42,7 @@ for ip in ipList:
 
 for i in range(0, len(responses)):
     if(not responses[i].status_code == 200):
-        print("response unsuccesful from ip " + ipList[i] +". Response code: " + responses[i].status_code +  ". Exiting the program")
+        print("response unsuccesful from ip " + ipList[i] +". Response code: " + str(responses[i].status_code) +  ". Exiting the program")
         sys.exit()
 
 print("All redfish responses successful.")
