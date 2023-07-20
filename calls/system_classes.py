@@ -158,7 +158,7 @@ class PortInfo:
 def populate_system(ip, username, password):
 
     # Model
-    model = get_model_name(ip, username, password)
+    model = get_model_name(ip, username, password)[0]
 
     # Memory
     sums = get_memory_sums(ip, username, password)
