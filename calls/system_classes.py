@@ -101,7 +101,7 @@ class NetworkAdapterInfo:
         ports = self.ports
         for port in ports:
             infoString += "Port \n"
-            infoString += port
+            infoString += str(port)
         return infoString
 
 
