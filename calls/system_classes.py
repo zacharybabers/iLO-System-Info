@@ -50,7 +50,7 @@ class NetworkAdapterInfo:
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.pciAddress(self, devices)
+        self.pciAddress(devices)
 
     def pciAddress(self, devices):
         address = ""
