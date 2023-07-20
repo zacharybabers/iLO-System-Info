@@ -10,11 +10,8 @@ from .redfish_functions import processor_info_dump
 from .redfish_functions import model_info_dump
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_nic_pci_address
-from .system_classes import MemoryInfo
-
 
 num_arguments = len(sys.argv) - 1
-MemoryInfo().introduce()
 print("number of arguments: " + str(num_arguments))
 print("arguments: " + str(sys.argv))
 ipList = []
