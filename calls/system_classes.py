@@ -60,7 +60,7 @@ class NetworkAdapterInfo:
                 address += hex(device.get('BusNumber'))[2:] + ":"
                 address += hex(device.get('DeviceNumber'))[2:] + ":"
                 address += hex(device.get('FunctionNumber'))[2:]
-        if len(address == 0):
+        if len(address) == 0:
             self.PciAddress = "Unavailable"
         else:
             self.PciAddress = address
