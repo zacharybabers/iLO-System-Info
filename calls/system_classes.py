@@ -40,6 +40,15 @@ class ProcessorInfo:
         self.totalCores = processor.get('TotalCores', "Unavailable")
         self.totalThreads = processor.get('TotalThreads', "Unavailable")
         self.instructionSet = processor.get('InstructionSet', "Unavailable")
+    
+    def __str__(self):
+        infoString = ""
+        infoString += "Model: " + self.model + "\n"
+        infoString += "Socket: " + self.socket + "\n"
+        infoString += "Total Cores: " + str(self.totalCores) + "\n"
+        infoString += "Total Threads: " + str(self.totalThreads) + "\n"
+        infoString += "Instruction Set: " + self.instructionSet + "\n"
+        return(infoString)
 
 class DriveInfo:
     def __init__(self, drive):
