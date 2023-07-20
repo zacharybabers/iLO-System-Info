@@ -60,6 +60,15 @@ class DriveInfo:
         self.physicalLocation = drive['PhysicalLocation']['PartLocation'].get('ServiceLabel', "Unavailable")
         self.ordinalLocation = drive['PhysicalLocation']['PartLocation'].get('LocationOrdinalValue', "Unavailable")
 
+    def __str__(self):
+        infoString = ""
+        infoString += "Name: " + self.name + "\n"
+        infoString += "Capacity Bytes: " + str(self.capacityBytes) + "\n"
+        infoString += "Capacity GB: " + str(self.capacityGB) + "\n"
+        infoString += "Physical Location: " + self.physicalLocation + "\n"
+        infoString += "Ordinal Location: " + str(self.ordinalLocation) + "\n"
+        return(infoString)
+
 class NetworkAdapterInfo:
     def __init__(self, adapter, devices):
         self.name = adapter.get('Name', "Unavailable")
