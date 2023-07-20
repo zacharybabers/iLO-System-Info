@@ -93,6 +93,18 @@ class NetworkAdapterInfo:
         else:
             self.PciAddress = address
 
+    def __str__(self):
+        infoString = ""
+        infoString += "Name: " + self.name + "\n"
+        infoString += "ID: " + str(self.ID) + "\n"
+        infoString += "Location: " + self.location + "\n"
+        ports = self.ports
+        for port in ports:
+            infoString += "Port \n"
+            infoString += port
+        return infoString
+
+
         
 
 class PortInfo:
@@ -109,6 +121,24 @@ class PortInfo:
                 self.ipv6Addresses.append(address)
         self.macAddress = port.get('MacAddress', "Unavailable")
         self.speedMbps = port.get('SpeedMbps', "Unavailable")
+
+    def __str__(self):
+        infoString = ""
+        ipv4 = self.ipv4Addresses
+        if(len(ipv4) > 0):
+            for address in ipv4:
+                infoString += "IPV4 Address: " + str(address) + "\n"
+        else:
+            infoString += "IPV4 Address: None \n"
+        ipv6 = self.ipv6Addresses
+        if(len(ipv6) > 0):
+            for address in ipv6:
+                    infoString += "IPV6 Address: " + str(address) + "\n"
+        else:
+            infoString += "IPV6 Address: None \n"
+        infoString += "Mac Address: " + self.macAddress + "\n"
+        infoString += "Speed Mbps: " + str(self.speedMbps) + "\n"
+        return(infoString)
 
 # write a function to populate a system given credentials
 def populate_system(ip, username, password):
