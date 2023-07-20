@@ -47,10 +47,6 @@ for i in range(0, len(responses)):
 
 print("All redfish responses successful.")
 
-system1 = populate_system(ipList[0], username, password)
-
-print(system1.networkAdapterList[0], system1.networkAdapterList[1], sep='')
-
 sys.exit()
 
 if num_arguments == 0:     
