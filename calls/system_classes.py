@@ -20,12 +20,16 @@ class ComputerSystem:
 
     def __str__(self):
         out = ""
-        out += "Model: " + self.model + "\n"
+        out += "Model: " + self.model + "\n\n"
+        out += "Memory: \n"
         out += str(self.memoryInfo) + "\n"
+        out += "Processors: \n"
         for processor in self.processorList:
             out += str(processor) + "\n"
+        out += "Storage: \n"
         for drive in self.driveList:
             out += str(drive) + "\n"
+        out += "Network: \n"
         for adapter in self.networkAdapterList:
             out += str(adapter) + "\n"
         out += "Network Interface Count: " + str(self.networkInterfaceCount)
