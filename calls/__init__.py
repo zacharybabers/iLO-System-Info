@@ -49,7 +49,7 @@ print("All redfish responses successful.")
 
 system1 = populate_system(ipList[0], username, password)
 
-print(str(system1))
+print(str(system1.model))
 
 sys.exit()
 

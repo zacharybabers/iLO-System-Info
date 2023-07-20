@@ -7,9 +7,11 @@ from .redfish_functions import get_drive_objects
 from .redfish_functions import get_adapter_objects
 from .redfish_functions import get_pci_objects
 from .redfish_functions import get_network_interface_count
+from .redfish_functions import get_model_name
 
 class ComputerSystem:
-    def __init__(self, memInfo, processors, drives, nics, interfaceCount):
+    def __init__(self, model, memInfo, processors, drives, nics, interfaceCount):
+        self.model = model
         self.memoryInfo = memInfo
         self.processorList = processors
         self.driveList = drives
@@ -85,6 +87,9 @@ class PortInfo:
 # write a function to populate a system given credentials
 def populate_system(ip, username, password):
 
+    # Model
+    model = get_model_name(ip, username, password)
+
     # Memory
     sums = get_memory_sums(ip, username, password)
     if not (len(sums) == 1):
@@ -113,6 +118,6 @@ def populate_system(ip, username, password):
     for adapter in adapters:
         nics.append(NetworkAdapterInfo(adapter, devices))
     
-    return ComputerSystem(memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
+    return ComputerSystem(model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
     
