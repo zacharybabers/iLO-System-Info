@@ -1,4 +1,5 @@
 import re
+from .system_classes import ComputerSystem
 
 def get_ips(ipString):
     rawStrings = ipString.split(',')
@@ -53,3 +54,5 @@ def process_file(file_path):
         print("File not found: " + file_path)
     
     return credentials
+
+def get_sys_row()

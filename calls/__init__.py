@@ -5,6 +5,8 @@ from .util_functions import get_ips
 from .util_functions import process_file
 from .redfish_functions import basic_request
 from .system_classes import populate_system
+from .system_classes import df_list
+from .system_classes import build_list
 
 pie = "hi"
 df = pd.DataFrame({'year': [2015, 2016],
@@ -48,7 +50,8 @@ print("All redfish responses successful.")
 
 print("\n")
 
+servers = []
 for ip in ipList:
-    print("Server at IP " + ip + ": \n")
-    server = populate_system(ip, username, password)
-    print(server)
+    servers.append(populate_system(ip, username, password))
+lst = build_list(servers)
+print(df_list(lst))
