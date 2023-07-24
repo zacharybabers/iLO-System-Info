@@ -62,8 +62,8 @@ def get_sys_row(computerSystem):
     row.append(computerSystem.memoryInfo.status)
     row.append(computerSystem.memoryInfo.totalMem)
     row.append(computerSystem.memoryInfo.persistentMem)
-    for item in row:
-        item = "|" + item
+    for i, value in enumerate(row):
+        row[i] = "|" + row[i]
     return row
 
 def add_sys_row(df, computerSystem):
