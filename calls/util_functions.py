@@ -62,8 +62,7 @@ def get_sys_row(computerSystem):
     row.append(computerSystem.memoryInfo.status)
     row.append(computerSystem.memoryInfo.totalMem)
     row.append(computerSystem.memoryInfo.persistentMem)
-    for i, value in enumerate(row):
-        row[i] = "|" + row[i]
+    
     return row
 
 def add_sys_row(df, computerSystem):
@@ -78,4 +77,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['Model', 'Mem Status', 'Total Memory', 'Persistent Memory'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory'], dtype=str)
