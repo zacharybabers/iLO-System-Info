@@ -1,5 +1,6 @@
 import re
 from .system_classes import ComputerSystem
+import pandas as pd
 
 def get_ips(ipString):
     rawStrings = ipString.split(',')
@@ -55,4 +56,25 @@ def process_file(file_path):
     
     return credentials
 
-def get_sys_row()
+def get_sys_row(computerSystem):
+    row = []
+    row.append(computerSystem.model)
+    row.append(computerSystem.memoryInfo.status)
+    row.append(computerSystem.memoryInfo.totalMem)
+    row.append(computerSystem.memoryInfo.persistentMem)
+
+    return row
+
+def add_sys_row(df, computerSystem):
+    row = get_sys_row(computerSystem)
+    df.append(row)
+
+def build_list(computerSystems):
+    lst = []
+    for computerSystem in computerSystems:
+        add_sys_row(lst, computerSystem)
+    
+    return lst
+
+def df_list(lst):
+    return pd.DataFrame(lst, columns=['Model', 'Mem Status', 'Total Memory', 'Persistent Memory'], dtype=str)
