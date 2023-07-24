@@ -76,5 +76,5 @@ def build_list(computerSystems):
     
     return lst
 
-def df_list(lst):
+def list_to_df(lst):
     return pd.DataFrame(lst, columns=['Model', 'Mem Status', 'Total Memory', 'Persistent Memory'], dtype=str)

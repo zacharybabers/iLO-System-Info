@@ -5,7 +5,7 @@ from .util_functions import get_ips
 from .util_functions import process_file
 from .redfish_functions import basic_request
 from .system_classes import populate_system
-from .system_classes import df_list
+from .system_classes import list_to_df
 from .system_classes import build_list
 
 pie = "hi"
