@@ -1,5 +1,4 @@
 import re
-import pandas as pd
 
 def get_ips(ipString):
     rawStrings = ipString.split(',')
@@ -54,10 +53,3 @@ def process_file(file_path):
         print("File not found: " + file_path)
     
     return credentials
-
-pie = "hi"
-df = pd.DataFrame({'year': [2015, 2016],
-                   'month': [2, 3],
-                   'day': [4, 5]})
-
-pd.to_datetime(df)
