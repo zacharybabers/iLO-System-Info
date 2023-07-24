@@ -1,9 +1,17 @@
 import getpass
 import sys
+import pandas as pd
 from .util_functions import get_ips
 from .util_functions import process_file
 from .redfish_functions import basic_request
 from .system_classes import populate_system
+
+pie = "hi"
+df = pd.DataFrame({'year': [2015, 2016],
+                   'month': [2, 3],
+                   'day': [4, 5]})
+
+pd.to_datetime(df)
 
 num_arguments = len(sys.argv) - 1
 print("number of arguments: " + str(num_arguments))
