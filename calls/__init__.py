@@ -3,10 +3,11 @@ import sys
 import pandas as pd
 from .util_functions import get_ips
 from .util_functions import process_file
+from .util_functions import df_list
+from .util_functions import build_list
 from .redfish_functions import basic_request
 from .system_classes import populate_system
-from .system_classes import list_to_df
-from .system_classes import build_list
+
 
 pie = "hi"
 df = pd.DataFrame({'year': [2015, 2016],
