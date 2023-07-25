@@ -10,7 +10,8 @@ from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_model_name
 
 class ComputerSystem:
-    def __init__(self, model, memInfo, processors, drives, nics, interfaceCount):
+    def __init__(self, ip, model, memInfo, processors, drives, nics, interfaceCount):
+        self.ip = ip
         self.model = model
         self.memoryInfo = memInfo
         self.processorList = processors
@@ -206,6 +207,6 @@ def populate_system(ip, username, password):
     for adapter in adapters:
         nics.append(NetworkAdapterInfo(adapter, devices))
     
-    return ComputerSystem(model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
+    return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
     
