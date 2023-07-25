@@ -66,9 +66,10 @@ def get_sys_rows(computerSystem):
     mainRow.append(computerSystem.memoryInfo.persistentMem)
     mainRow.append(cpuSum.get('cpuCount'))
     mainRow.append(cpuSum.get('totalCores'))
-    mainRow.append(cpuSum.get('totalThreads'))  
+    mainRow.append(cpuSum.get('totalThreads'))
+    mainRow.append(computerSystem.networkAdapterList[0].name)
+    mainRow.append(computerSystem.driveList[0].name)
     rows.append(mainRow)
-    rows.append(["pie"])
 
     return rows
 
@@ -85,4 +86,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', '| Network', '| Storage'], dtype=str)
