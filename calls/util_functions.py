@@ -59,8 +59,8 @@ def process_file(file_path):
 def get_sys_rows(computerSystem):
     cpuSum = computerSystem.get_cpu_sum()
     rows = []
+    rows.append(["System at IP " + computerSystem.ip, "", "", "", "", "", ""])
     mainRow = []
-    mainRow.append(computerSystem.ip)
     mainRow.append(computerSystem.model)
     mainRow.append(str(computerSystem.memoryInfo.totalMem) + " GB")
     mainRow.append(cpuSum.get('cpuCount'))
@@ -102,4 +102,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['IP', '| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
