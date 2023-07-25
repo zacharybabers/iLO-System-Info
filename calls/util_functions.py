@@ -56,29 +56,32 @@ def process_file(file_path):
     
     return credentials
 
-def get_sys_row(computerSystem):
+def get_sys_rows(computerSystem):
     cpuSum = computerSystem.get_cpu_sum()
-    row = []
-    row.append(computerSystem.model)
-    row.append(computerSystem.memoryInfo.status)
-    row.append(computerSystem.memoryInfo.totalMem)
-    row.append(computerSystem.memoryInfo.persistentMem)
-    row.append(cpuSum.get('cpuCount'))
-    row.append(cpuSum.get('totalCores'))
-    row.append(cpuSum.get('totalThreads'))  
-    row.append("Test Element line 1 \n Test Element line 2")  
-    return row
+    rows = []
+    mainRow = []
+    mainRow.append(computerSystem.model)
+    mainRow.append(computerSystem.memoryInfo.status)
+    mainRow.append(computerSystem.memoryInfo.totalMem)
+    mainRow.append(computerSystem.memoryInfo.persistentMem)
+    mainRow.append(cpuSum.get('cpuCount'))
+    mainRow.append(cpuSum.get('totalCores'))
+    mainRow.append(cpuSum.get('totalThreads'))  
+    rows.append(mainRow)
 
-def add_sys_row(df, computerSystem):
-    row = get_sys_row(computerSystem)
-    df.append(row)
+    return rows
+
+def add_sys_rows(df, computerSystem):
+    rows = get_sys_rows(computerSystem)
+    for row in rows:
+        df.append(row)
 
 def build_list(computerSystems):
     lst = []
     for computerSystem in computerSystems:
-        add_sys_row(lst, computerSystem)
+        add_sys_rows(lst, computerSystem)
     
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', ' TestElement'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads'], dtype=str)
