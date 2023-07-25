@@ -34,7 +34,7 @@ else:
     print("Invalid num arguments")
     sys.exit()
 
-ipList = sorted(ipList)
+ipList = sorted(ipList, key=lambda ip: [int(num) for num in ip.split('.')])
 
 responses = []
 for ip in ipList:
