@@ -10,13 +10,28 @@ from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_model_name
 
 class ComputerSystem:
-    def __init__(self, model, memInfo, processors, drives, nics, interfaceCount):
+    def __init__(self, ip, model, memInfo, processors, drives, nics, interfaceCount):
+        self.ip = ip
         self.model = model
         self.memoryInfo = memInfo
         self.processorList = processors
         self.driveList = drives
         self.networkAdapterList = nics
         self.networkInterfaceCount = interfaceCount
+
+    def get_cpu_sum(self):
+        cpuSum = dict()
+        cpuSum['cpuCount'] = len(self.processorList)
+        totalCores = 0
+        totalThreads = 0
+        for processor in self.processorList:
+            totalCores += int(processor.totalCores)
+            totalThreads += int(processor.totalThreads)
+        cpuSum['totalCores'] = totalCores
+        cpuSum['totalThreads'] = totalThreads
+        return cpuSum
+        
+
 
     def __str__(self):
         out = ""
@@ -100,7 +115,7 @@ class NetworkAdapterInfo:
     def pciAddress(self, devices):
         address = ""
         for device in devices:
-            if device.get('Name', 'unavailable') == self.name:
+            if device.get('Name', 'Unavailable') == self.name:
                 address += "0000:"
                 address += hex(device.get('BusNumber'))[2:] + ":"
                 address += hex(device.get('DeviceNumber'))[2:] + ":"
@@ -192,6 +207,6 @@ def populate_system(ip, username, password):
     for adapter in adapters:
         nics.append(NetworkAdapterInfo(adapter, devices))
     
-    return ComputerSystem(model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
+    return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
     

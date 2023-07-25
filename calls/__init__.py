@@ -1,31 +1,35 @@
 import getpass
 import sys
+import pandas as pd
 from .util_functions import get_ips
 from .util_functions import process_file
+from .util_functions import df_list
+from .util_functions import build_list
 from .redfish_functions import basic_request
 from .system_classes import populate_system
 
 num_arguments = len(sys.argv) - 1
-print("number of arguments: " + str(num_arguments))
-print("arguments: " + str(sys.argv))
 ipList = []
 username = ""
 password = ""
+printMode = ""
 
 if num_arguments == 0:
     ipList = get_ips(input("Enter iLO IPs: "))
     username = input("Enter iLO Username: ")
     password = getpass.getpass("Enter iLO Password: ")
+    printMode = input("Enter print mode (table, detailed): ")
 elif num_arguments == 1:
     credentials = process_file(sys.argv[1])
     ipList = get_ips(credentials[0])
     username = credentials[1]
     password = credentials[2]
+    printMode = credentials[3]
 else:
     print("Invalid num arguments")
     sys.exit()
 
-
+ipList = sorted(ipList, key=lambda ip: [int(num) for num in ip.split('.')])
 
 responses = []
 for ip in ipList:
@@ -40,7 +44,17 @@ print("All redfish responses successful.")
 
 print("\n")
 
+
+servers = []
 for ip in ipList:
-    print("Server at IP " + ip + ": \n")
-    server = populate_system(ip, username, password)
-    print(server)
+    servers.append(populate_system(ip, username, password))
+
+if printMode == "table":
+    lst = build_list(servers)
+    print(df_list(lst).to_string(index=False))
+elif printMode == "detailed":
+    for server in servers:
+        print("Server at IP " + ip + ": \n")
+        print(server)
+else:
+    print("Invalid print mode.")

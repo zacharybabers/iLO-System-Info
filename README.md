@@ -1,5 +1,7 @@
 This is a simple python utility that returns basic information about an HP server using redfish credentials.
 
+Dependency: pip3 install pandas
+
 Usage (make sure you have python3):  
 clone this repo  
 'python3 hpinfo.py' in your command line  

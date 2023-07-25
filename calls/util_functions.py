@@ -1,4 +1,6 @@
 import re
+from .system_classes import ComputerSystem
+import pandas as pd
 
 def get_ips(ipString):
     rawStrings = ipString.split(',')
@@ -53,3 +55,52 @@ def process_file(file_path):
         print("File not found: " + file_path)
     
     return credentials
+
+def get_sys_rows(computerSystem):
+    cpuSum = computerSystem.get_cpu_sum()
+    rows = []
+    mainRow = []
+    mainRow.append(computerSystem.ip)
+    mainRow.append(computerSystem.model)
+    mainRow.append(str(computerSystem.memoryInfo.totalMem) + " GB")
+    mainRow.append(cpuSum.get('cpuCount'))
+    mainRow.append(cpuSum.get('totalCores'))
+    mainRow.append(cpuSum.get('totalThreads'))
+    mainRow.append(computerSystem.networkAdapterList[0].name)
+    mainRow.append(computerSystem.driveList[0].name)
+    rows.append(mainRow)
+
+    maxNumRows = len(computerSystem.networkAdapterList) if len(computerSystem.networkAdapterList) > len(computerSystem.driveList) else len(computerSystem.driveList)
+    if maxNumRows > 1:
+        for i in range(1, maxNumRows):
+            extraRow = []
+            for j in range(0, 6):
+                extraRow.append(' ')
+            if len(computerSystem.networkAdapterList) > i:
+                extraRow.append(computerSystem.networkAdapterList[i].name)
+            else:
+                extraRow.append(' ')
+            if len(computerSystem.driveList) > i:
+                extraRow.append(computerSystem.driveList[i].name)
+            else:
+                extraRow.append(' ')
+            rows.append(extraRow)
+
+    return rows
+
+def add_sys_rows(df, computerSystem):
+    rows = get_sys_rows(computerSystem)
+    for row in rows:
+        df.append(row)
+
+def build_list(computerSystems):
+    lst = []
+    lst.append(["", "", "", "", "", "", "", ""])
+    for computerSystem in computerSystems:
+        add_sys_rows(lst, computerSystem)
+        lst.append(["", "", "", "", "", "", "", ""]) # add empty row
+    
+    return lst
+
+def df_list(lst):
+    return pd.DataFrame(lst, columns=['IP |', 'Model |', 'Mem |', '#CPU |', 'Cores |', 'Threads |', 'NICs |', 'Storage |'], dtype=str)
