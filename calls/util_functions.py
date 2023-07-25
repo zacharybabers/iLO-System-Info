@@ -71,6 +71,22 @@ def get_sys_rows(computerSystem):
     mainRow.append(computerSystem.driveList[0].name)
     rows.append(mainRow)
 
+    maxNumRows = len(computerSystem.networkAdapterList) if len(computerSystem.networkAdapterList) > len(computerSystem.driveList) else len(computerSystem.driveList)
+    if maxNumRows > 1:
+        for i in range(1, maxNumRows):
+            extraRow = []
+            for i in range(0, 7):
+                extraRow.append('-')
+            if len(computerSystem.networkAdapterList) > i:
+                extraRow.append(computerSystem.networkAdapterList[i].name)
+            else:
+                extraRow.append('-')
+            if len(computerSystem.driveList) > i:
+                extraRow.append(computerSystem.driveList[i].name)
+            else:
+                extraRow.append('-')
+            rows.append(extraRow)
+
     return rows
 
 def add_sys_rows(df, computerSystem):
