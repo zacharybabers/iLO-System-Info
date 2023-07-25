@@ -68,6 +68,7 @@ def get_sys_rows(computerSystem):
     mainRow.append(cpuSum.get('totalCores'))
     mainRow.append(cpuSum.get('totalThreads'))  
     rows.append(mainRow)
+    rows.append(["pie"])
 
     return rows
 
