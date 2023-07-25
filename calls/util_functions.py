@@ -61,7 +61,7 @@ def get_sys_rows(computerSystem):
     rows = []
     mainRow = []
     mainRow.append(computerSystem.model)
-    mainRow.append(computerSystem.memoryInfo.totalMem)
+    mainRow.append(str(computerSystem.memoryInfo.totalMem) + " GB")
     mainRow.append(cpuSum.get('cpuCount'))
     mainRow.append(cpuSum.get('totalCores'))
     mainRow.append(cpuSum.get('totalThreads'))
