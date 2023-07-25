@@ -61,9 +61,7 @@ def get_sys_rows(computerSystem):
     rows = []
     mainRow = []
     mainRow.append(computerSystem.model)
-    mainRow.append(computerSystem.memoryInfo.status)
     mainRow.append(computerSystem.memoryInfo.totalMem)
-    mainRow.append(computerSystem.memoryInfo.persistentMem)
     mainRow.append(cpuSum.get('cpuCount'))
     mainRow.append(cpuSum.get('totalCores'))
     mainRow.append(cpuSum.get('totalThreads'))
@@ -75,7 +73,7 @@ def get_sys_rows(computerSystem):
     if maxNumRows > 1:
         for i in range(1, maxNumRows):
             extraRow = []
-            for j in range(0, 7):
+            for j in range(0, 5):
                 extraRow.append('-')
             if len(computerSystem.networkAdapterList) > i:
                 extraRow.append(computerSystem.networkAdapterList[i].name)
@@ -102,4 +100,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', '| Network', '| Storage'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Total Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', '| Network', '| Storage'], dtype=str)
