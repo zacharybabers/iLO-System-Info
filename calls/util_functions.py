@@ -59,8 +59,8 @@ def process_file(file_path):
 def get_sys_rows(computerSystem):
     cpuSum = computerSystem.get_cpu_sum()
     rows = []
-    rows.append(["System at IP " + computerSystem.ip, "", "", "", "", "", ""])
     mainRow = []
+    mainRow.append(computerSystem.ip)
     mainRow.append(computerSystem.model)
     mainRow.append(str(computerSystem.memoryInfo.totalMem) + " GB")
     mainRow.append(cpuSum.get('cpuCount'))
@@ -74,7 +74,7 @@ def get_sys_rows(computerSystem):
     if maxNumRows > 1:
         for i in range(1, maxNumRows):
             extraRow = []
-            for j in range(0, 5):
+            for j in range(0, 6):
                 extraRow.append(' ')
             if len(computerSystem.networkAdapterList) > i:
                 extraRow.append(computerSystem.networkAdapterList[i].name)
@@ -97,9 +97,9 @@ def build_list(computerSystems):
     lst = []
     for computerSystem in computerSystems:
         add_sys_rows(lst, computerSystem)
-        lst.append(["", "", "", "", "", "", ""]) # add empty row
+        lst.append(["", "", "", "", "", "", "", ""]) # add empty row
     
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
+    return pd.DataFrame(lst, columns=['| IP', '| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
