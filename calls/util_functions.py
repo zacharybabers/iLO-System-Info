@@ -65,7 +65,8 @@ def get_sys_row(computerSystem):
     row.append(computerSystem.memoryInfo.persistentMem)
     row.append(cpuSum.get('cpuCount'))
     row.append(cpuSum.get('totalCores'))
-    row.append(cpuSum.get('totalThreads'))    
+    row.append(cpuSum.get('totalThreads'))  
+    row.append("Test Element line 1 \n Test Element line 2")  
     return row
 
 def add_sys_row(df, computerSystem):
@@ -80,4 +81,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', ' TestElement'], dtype=str)
