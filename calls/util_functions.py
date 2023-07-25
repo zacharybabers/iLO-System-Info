@@ -77,12 +77,12 @@ def get_sys_rows(computerSystem):
             extraRow = []
             for i in range(0, 7):
                 extraRow.append('-')
-            if len(computerSystem.networkAdapterList) < i:
+            if len(computerSystem.networkAdapterList) > i:
                 extraRow.append(computerSystem.networkAdapterList[i].name)
             else:
                 extraRow.append('-')
                 print("here")
-            if len(computerSystem.driveList) < i:
+            if len(computerSystem.driveList) > i:
                 extraRow.append(computerSystem.driveList[i].name)
             else:
                 extraRow.append('-')
