@@ -95,6 +95,7 @@ def add_sys_rows(df, computerSystem):
 
 def build_list(computerSystems):
     lst = []
+    lst.append(["", "", "", "", "", "", "", ""])
     for computerSystem in computerSystems:
         add_sys_rows(lst, computerSystem)
         lst.append(["", "", "", "", "", "", "", ""]) # add empty row
