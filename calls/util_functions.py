@@ -96,9 +96,9 @@ def build_list(computerSystems):
     lst = []
     for computerSystem in computerSystems:
         add_sys_rows(lst, computerSystem)
-        lst.append(["-", "-", "-", "-", "-", "-", "-"]) # add empty row
+        lst.append(["", "", "", "", "", "", ""]) # add empty row
     
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Total Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', '| Network', '| Storage'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
