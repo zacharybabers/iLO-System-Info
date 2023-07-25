@@ -55,4 +55,4 @@ servers = []
 for ip in ipList:
     servers.append(populate_system(ip, username, password))
 lst = build_list(servers)
-print(df_list(lst).to_string(justify='left'))
+print(df_list(lst).to_string(justify='left', index=False))
