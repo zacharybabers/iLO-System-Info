@@ -57,12 +57,15 @@ def process_file(file_path):
     return credentials
 
 def get_sys_row(computerSystem):
+    cpuSum = computerSystem.get_cpu_sum()
     row = []
     row.append(computerSystem.model)
     row.append(computerSystem.memoryInfo.status)
     row.append(computerSystem.memoryInfo.totalMem)
     row.append(computerSystem.memoryInfo.persistentMem)
-    
+    row.append(cpuSum.get('cpuCount'))
+    row.append(cpuSum.get('totalCores'))
+    row.append(cpuSum.get('totalThreads'))    
     return row
 
 def add_sys_row(df, computerSystem):
@@ -77,4 +80,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads'], dtype=str)

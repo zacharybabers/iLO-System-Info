@@ -18,6 +18,20 @@ class ComputerSystem:
         self.networkAdapterList = nics
         self.networkInterfaceCount = interfaceCount
 
+    def get_cpu_sum(self):
+        cpuSum = dict()
+        cpuSum['cpuCount'] = len(self.processorList)
+        totalCores = 0
+        totalThreads = 0
+        for processor in self.processorList:
+            totalCores += int(processor.totalCores)
+            totalThreads += int(processor.totalThreads)
+        cpuSum['totalCores'] = totalCores
+        cpuSum['totalThreads'] = totalThreads
+        return cpuSum
+        
+
+
     def __str__(self):
         out = ""
         out += "Model: " + self.model + "\n\n"
