@@ -66,12 +66,6 @@ def get_sys_row(computerSystem):
     row.append(cpuSum.get('cpuCount'))
     row.append(cpuSum.get('totalCores'))
     row.append(cpuSum.get('totalThreads'))    
-    row.append(computerSystem.memoryInfo.totalMem)
-    row.append(computerSystem.memoryInfo.persistentMem)
-    row.append(cpuSum.get('cpuCount'))
-    row.append(cpuSum.get('totalCores'))
-    row.append(cpuSum.get('totalThreads'))    
-
     return row
 
 def add_sys_row(df, computerSystem):
@@ -86,4 +80,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads', 'Pie Count', 'Pie count', 'pie count', 'This is a filler value', 'we are testing the limits of what we humans can accomplish with out best'], dtype=str)
+    return pd.DataFrame(lst, columns=['| Model', '| Mem Status', '| Total Memory', '| Persistent Memory', '| CPU Sockets', '| Total Cores', '| TotalThreads'], dtype=str)
