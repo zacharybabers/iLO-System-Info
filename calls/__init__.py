@@ -17,8 +17,6 @@ df = pd.DataFrame({'year': [2015, 2016],
 pd.to_datetime(df)
 
 num_arguments = len(sys.argv) - 1
-print("number of arguments: " + str(num_arguments))
-print("arguments: " + str(sys.argv))
 ipList = []
 username = ""
 password = ""
