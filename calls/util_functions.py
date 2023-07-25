@@ -102,4 +102,4 @@ def build_list(computerSystems):
     return lst
 
 def df_list(lst):
-    return pd.DataFrame(lst, columns=['| IP', '| Model', '| Mem', '| #CPU', '| Cores', '| Threads', '| NICs', '| Storage'], dtype=str)
+    return pd.DataFrame(lst, columns=['IP |', 'Model |', 'Mem |', '#CPU |', 'Cores |', 'Threads |', 'NICs |', 'Storage |'], dtype=str)
