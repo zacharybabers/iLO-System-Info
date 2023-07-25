@@ -8,28 +8,23 @@ from .util_functions import build_list
 from .redfish_functions import basic_request
 from .system_classes import populate_system
 
-
-pie = "hi"
-df = pd.DataFrame({'year': [2015, 2016],
-                   'month': [2, 3],
-                   'day': [4, 5]})
-
-pd.to_datetime(df)
-
 num_arguments = len(sys.argv) - 1
 ipList = []
 username = ""
 password = ""
+printMode = ""
 
 if num_arguments == 0:
     ipList = get_ips(input("Enter iLO IPs: "))
     username = input("Enter iLO Username: ")
     password = getpass.getpass("Enter iLO Password: ")
+    printMode = input("Enter print mode (table, detailed): ")
 elif num_arguments == 1:
     credentials = process_file(sys.argv[1])
     ipList = get_ips(credentials[0])
     username = credentials[1]
     password = credentials[2]
+    printMode = credentials[3]
 else:
     print("Invalid num arguments")
     sys.exit()
@@ -49,8 +44,17 @@ print("All redfish responses successful.")
 
 print("\n")
 
+
 servers = []
 for ip in ipList:
     servers.append(populate_system(ip, username, password))
-lst = build_list(servers)
-print(df_list(lst).to_string(index=False))
+
+if printMode == "table":
+    lst = build_list(servers)
+    print(df_list(lst).to_string(index=False))
+elif printMode == "detailed":
+    for server in servers:
+        print("Server at IP " + ip + ": \n")
+        print(server)
+else:
+    print("Invalid print mode.")
