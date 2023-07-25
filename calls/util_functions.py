@@ -96,6 +96,7 @@ def build_list(computerSystems):
     lst = []
     for computerSystem in computerSystems:
         add_sys_rows(lst, computerSystem)
+        lst.append([' ', ' ', ' ', ' ', ' ', ' ', ' ']) # add empty row
     
     return lst
 
