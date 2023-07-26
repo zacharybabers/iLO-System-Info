@@ -200,6 +200,7 @@ def populate_system(ip, username, password):
         drives.append(get_drive_objects(ip, username, password, storage))
     driveInfos = []
     for drive in drives:
+        print(drive)
         driveInfos.append(DriveInfo(drive))
 
     # NICs
