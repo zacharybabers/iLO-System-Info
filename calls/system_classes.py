@@ -201,11 +201,10 @@ def populate_system(ip, username, password):
             drives.append(driveObject)
     driveInfos = []
     for drive in drives:
-        print(type(drive))
         driveInfos.append(DriveInfo(drive))
 
     # NICs
-    devices = get_pci_objects(ip, username, password)
+    # devices = get_pci_objects(ip, username, password)
     adapters = get_adapter_objects(ip, username, password)
     nics = []
     for adapter in adapters:
