@@ -197,7 +197,7 @@ def populate_system(ip, username, password):
     storages = get_storage_objects(ip, username, password)
     drives = []
     for storage in storages:
-        drive.append(get_drive_objects(ip, username, password, storage))
+        drives.append(get_drive_objects(ip, username, password, storage))
     driveInfos = []
     for drive in drives:
         driveInfos.append(DriveInfo(drive))
