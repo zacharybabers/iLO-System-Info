@@ -106,8 +106,10 @@ def processor_info_dump(ip, username, password):
     return out
 
 def get_storageIDs(ip, username, password):
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
     storageIDs = []
-    storages = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Storage").text)
+    storages = json.loads(basic_request(ip, username, password, systemID + "/Storage").text)
     for storage in storages['Members']:
         storageIDs.append(storage['@odata.id'])
     return storageIDs
@@ -155,11 +157,15 @@ def drive_info_dump(ip, username, password):
 
 # Network Interface functions; there are currently no network interfaces being returned by our iLO, so I will just display the number of network interfaces so it is apparent if/when this functionality needs to be added
 def get_network_interface_count(ip, username, password):
-    interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    interfaces = json.loads(basic_request(ip, username, password, systemID + "/NetworkInterfaces").text)
     return interfaces['Members@odata.count']
 
 def get_interfaceIDs(ip, username, password):
-    interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    interfaces = json.loads(basic_request(ip, username, password, systemID + "/NetworkInterfaces").text)
     driveIDs = []
     for id in interfaces['Members']:
         driveIDs.append(id['@odata.id'])
@@ -178,9 +184,11 @@ def interface_info_dump(ip, username, password):
     for interface in interfaces:
         infoString+="Interface Name: " + interface["Name"] + "\n"
     return infoString
-####
+
 def get_adapterIDs(ip, username, password):
-    adapters = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/BaseNetworkAdapters").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    adapters = json.loads(basic_request(ip, username, password, systemID + "/BaseNetworkAdapters").text)
     adapterIDs = []
     for id in adapters['Members']:
         adapterIDs.append(id['@odata.id'])
@@ -234,7 +242,9 @@ def adapter_info_dump(ip, username, password):
     return out
     
 def get_pciIDs(ip, username, password):
-    devices = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/pcidevices").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    devices = json.loads(basic_request(ip, username, password, systemID + "/pcidevices").text)
     deviceIDs = []
     for id in devices['Members']:
         deviceIDs.append(id['@odata.id'])
