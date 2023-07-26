@@ -108,6 +108,7 @@ class NetworkAdapterInfo:
             self.isDell = True
             print('here')
             self.name = Oem.get('Dell').get('DellNIC').get('ProductName')
+            self.name = self.name.split(' - ')[0].strip()
         else:
             self.name = adapter.get('Name', "Unavailable") 
         self.ID = adapter.get('Id', "Unavailable")
