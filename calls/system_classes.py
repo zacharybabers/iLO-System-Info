@@ -104,7 +104,7 @@ class DriveInfo:
 class NetworkAdapterInfo:
     def __init__(self, adapter, devices):
         dellNic = adapter.get("DellNIC", "Unavailable")
-        print("type of dellnic", type(dellNic))
+        print(dellNic)
         if type(dellNic) == dict:
             self.isDell = True
             print('here')
