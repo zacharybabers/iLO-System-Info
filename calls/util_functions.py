@@ -47,7 +47,7 @@ def process_file(file_path):
     credentials = []
     try:
         with open(file_path, 'r') as file:
-            lines = [next(file) for _ in range(3)]
+            lines = [next(file) for _ in range(4)]
         
         for line in lines:
             credentials.append(line.strip())
