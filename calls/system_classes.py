@@ -103,12 +103,11 @@ class DriveInfo:
 
 class NetworkAdapterInfo:
     def __init__(self, adapter, devices):
-        dellNic = adapter.get("DellNIC", "Unavailable")
-        print(dellNic)
-        if type(dellNic) == dict:
+        Oem = adapter.get("Oem", "Unavailable")
+        if type(Oem) == dict and not Oem.get('Dell') == None:
             self.isDell = True
             print('here')
-            self.name = dellNic.get('ProductName', "Unavailable")
+            self.name = Oem.get('Dell').get('DellNIC').get('ProductName')
         else:
             self.name = adapter.get('Name', "Unavailable") 
         self.ID = adapter.get('Id', "Unavailable")
