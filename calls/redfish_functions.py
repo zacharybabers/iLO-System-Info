@@ -201,8 +201,13 @@ def get_adapterIDs(ip, username, password):
     if dell:
         chassisID = get_chassisIDs(ip, username, password)[0]
         adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
+        viewIDs = []
         for id in adapters['Members']:
-            adapterIDs.append(id['@odata.id'])
+            viewIDs.append(id['@odata.id'])
+        for viewID in viewIDs:
+            networkFunctions = json.loads(basic_request(ip, username, password, viewID + "/NetworkDeviceFunctions").text)
+            for id in networkFunctions['Members']:
+                adapterIDs.append(id['@odata.id'])
     else:
         adapters = json.loads(basic_request(ip, username, password, systemID + "/BaseNetworkAdapters").text)
         for id in adapters['Members']:
