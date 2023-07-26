@@ -8,6 +8,13 @@ def basic_request(ip, username, password, redfish_item):
         response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False, timeout=5))
     return response
 
+def get_chassisIDs(ip, username, password):
+    chassis = json.loads(basic_request(ip, username, password, "/redfish/v1/Chassis").text)
+    chassisIDs = []
+    for member in chassis['Members']:
+        chassisIDs.append(member['@odata.id'])
+    return chassisIDs
+
 def get_systemIDs(ip, username, password):
     systems = json.loads(basic_request(ip,username,password,"/redfish/v1/Systems").text)
     systemIDs = []
@@ -188,10 +195,18 @@ def interface_info_dump(ip, username, password):
 def get_adapterIDs(ip, username, password):
     systems = get_systemIDs(ip, username, password)
     systemID = systems[0]
-    adapters = json.loads(basic_request(ip, username, password, systemID + "/BaseNetworkAdapters").text)
+    system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    for id in adapters['Members']:
-        adapterIDs.append(id['@odata.id'])
+    dell = system.get('NetworkAdapters', 'Unavailable') == 'Unavailable'
+    if dell:
+        chassisID = get_chassisIDs(ip, username, password)[0]
+        adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
+        for id in adapters['Members']:
+            adapterIDs.append(id['@odata.id'])
+    else:
+        adapters = json.loads(basic_request(ip, username, password, systemID + "/BaseNetworkAdapters").text)
+        for id in adapters['Members']:
+            adapterIDs.append(id['@odata.id'])
     return adapterIDs
 
 def get_adapter_objects(ip, username, password):
@@ -202,7 +217,7 @@ def get_adapter_objects(ip, username, password):
     return adapters
 
 def get_adapter_ports(adapter):
-    ports = adapter['PhysicalPorts']
+    ports = adapter.get('PhysicalPorts', [])
     return ports
 
 def get_port_info(port):

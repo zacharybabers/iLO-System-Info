@@ -103,14 +103,16 @@ class DriveInfo:
 
 class NetworkAdapterInfo:
     def __init__(self, adapter, devices):
-        self.name = adapter.get('Name', "Unavailable")
+        self.name = adapter.get('Model', 'noModel')
+        if self.name == 'noModel':
+            self.name = adapter.get('Name', "Unavailable") 
         self.ID = adapter.get('Id', "Unavailable")
         self.location = adapter.get('Location', "Unavailable")
         self.ports = []
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.pciAddress(devices)
+        self.PciAddress = "Unavailable"
 
     def pciAddress(self, devices):
         address = ""
@@ -193,9 +195,9 @@ def populate_system(ip, username, password):
 
     # Drives
     storages = get_storage_objects(ip, username, password)
-    if not (len(storages) == 1):
-        print(f"System at ip {ip} has wrong number of storages.")
-    drives = get_drive_objects(ip, username, password, storages[0])
+    drives = []
+    for storage in storages:
+        drive.append(get_drive_objects(ip, username, password, storage))
     driveInfos = []
     for drive in drives:
         driveInfos.append(DriveInfo(drive))
@@ -205,7 +207,7 @@ def populate_system(ip, username, password):
     adapters = get_adapter_objects(ip, username, password)
     nics = []
     for adapter in adapters:
-        nics.append(NetworkAdapterInfo(adapter, devices))
+        nics.append(NetworkAdapterInfo(adapter, []))
     
     return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
