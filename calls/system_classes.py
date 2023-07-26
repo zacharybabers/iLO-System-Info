@@ -197,10 +197,11 @@ def populate_system(ip, username, password):
     storages = get_storage_objects(ip, username, password)
     drives = []
     for storage in storages:
-        drives.append(get_drive_objects(ip, username, password, storage))
+        for driveObject in get_drive_objects(ip, username, password, storage):
+            drives.append(driveObject)
     driveInfos = []
     for drive in drives:
-        print(print(drive[0]))
+        print(type(drive))
         driveInfos.append(DriveInfo(drive))
 
     # NICs
