@@ -106,6 +106,7 @@ class NetworkAdapterInfo:
         dellNic = adapter.get("DellNIC", "Unavailable")
         if type(dellNic) == dict:
             self.isDell = True
+            print('here')
             self.name = dellNic.get('ProductName', "Unavailable")
         else:
             self.name = adapter.get('Name', "Unavailable") 
