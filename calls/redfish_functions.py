@@ -197,10 +197,8 @@ def get_adapterIDs(ip, username, password):
     systemID = systems[0]
     system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    print(system.get('Oem'))
-    dell = system.get('Links', 'Unavailable').get('NetworkAdapters', 'Unavailable') == 'Unavailable'
+    dell = system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable'
     if dell:
-        print("This appears to be a dell")
         chassisID = get_chassisIDs(ip, username, password)[0]
         adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
         viewIDs = []
