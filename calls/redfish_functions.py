@@ -293,6 +293,10 @@ def get_nic_pci_address(ip, username, password):
         out.append(nic['Name'] + " PCI Address: " + pcistring)
     return out
 
-
+def server_is_dell(ip, username, password):
+    system = get_system_objects(ip, username, password)[0]
+    if system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable':
+        return True
+    return False
 
     

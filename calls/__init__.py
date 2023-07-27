@@ -6,6 +6,7 @@ from .util_functions import process_file
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
+from .redfish_functions import server_is_dell
 from .system_classes import populate_system
 
 num_arguments = len(sys.argv) - 1
@@ -48,7 +49,8 @@ print("\n")
 servers = []
 for ip in ipList:
     servers.append(populate_system(ip, username, password))
-
+    print("Is this a dell server?", server_is_dell(ip, username, password))
+    
 if printMode == "table":
     lst = build_list(servers)
     print(df_list(lst).to_string(index=False))
