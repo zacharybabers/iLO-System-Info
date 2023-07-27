@@ -106,7 +106,6 @@ class NetworkAdapterInfo:
         Oem = adapter.get("Oem", "Unavailable")
         if type(Oem) == dict and not Oem.get('Dell') == None:
             self.isDell = True
-            print('here')
             self.name = Oem.get('Dell').get('DellNIC').get('ProductName')
             self.name = self.name.split(' - ')[0].strip()
         else:
