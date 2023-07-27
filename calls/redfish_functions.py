@@ -197,7 +197,7 @@ def get_adapterIDs(ip, username, password):
     systemID = systems[0]
     system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    dell = system.get('BaseNetworkAdapters', 'Unavailable') == 'Unavailable'
+    dell = system.get('NetworkAdapters', 'Unavailable') == 'Unavailable'
     if dell:
         chassisID = get_chassisIDs(ip, username, password)[0]
         adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
