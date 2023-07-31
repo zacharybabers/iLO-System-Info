@@ -126,12 +126,13 @@ class NetworkAdapterInfo:
             address += hex(Oem.get('Dell').get('DellNIC').get('BusNumber', 'Unavailable'))[2:] + ":"
             address += "00."
             address += hex(functionNum)[2:]
-        for device in devices:
-            if device.get('Name', 'Unavailable') == self.name:
-                address += "0000:"
-                address += hex(device.get('BusNumber'))[2:] + ":"
-                address += hex(device.get('DeviceNumber'))[2:] + "."
-                address += hex(device.get('FunctionNumber'))[2:]
+        else:
+            for device in devices:
+                if device.get('Name', 'Unavailable') == self.name:
+                    address += "0000:"
+                    address += hex(device.get('BusNumber'))[2:] + ":"
+                    address += hex(device.get('DeviceNumber'))[2:] + "."
+                    address += hex(device.get('FunctionNumber'))[2:]
         if len(address) == 0:
             return "Unavailable"
         else:
