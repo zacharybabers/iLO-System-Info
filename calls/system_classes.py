@@ -8,6 +8,7 @@ from .redfish_functions import get_adapter_objects
 from .redfish_functions import get_pci_objects
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_model_name
+from .redfish_functions import server_is_dell
 
 class ComputerSystem:
     def __init__(self, ip, model, memInfo, processors, drives, nics, interfaceCount):
@@ -107,19 +108,21 @@ class NetworkAdapterInfo:
         if type(Oem) == dict and not Oem.get('Dell') == None:
             self.isDell = True
             self.name = Oem.get('Dell').get('DellNIC').get('ProductName')
-            self.name = self.name.split(' - ')[0].strip()
         else:
             self.name = adapter.get('Name', "Unavailable") 
+        self.name = self.name.split(' - ')[0].strip()
         self.ID = adapter.get('Id', "Unavailable")
         self.location = adapter.get('Location', "Unavailable")
         self.ports = []
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.PciAddress = "Unavailable"
+        self.PciAddress = self.pciAddress(self, devices)
 
     def pciAddress(self, devices):
         address = ""
+        if devices == None:
+            return "Unavailable"
         for device in devices:
             if device.get('Name', 'Unavailable') == self.name:
                 address += "0000:"
@@ -127,9 +130,9 @@ class NetworkAdapterInfo:
                 address += hex(device.get('DeviceNumber'))[2:] + ":"
                 address += hex(device.get('FunctionNumber'))[2:]
         if len(address) == 0:
-            self.PciAddress = "Unavailable"
+            return "Unavailable"
         else:
-            self.PciAddress = address
+            return address
 
     def __str__(self):
         infoString = ""
@@ -209,10 +212,16 @@ def populate_system(ip, username, password):
 
     # NICs
     # devices = get_pci_objects(ip, username, password)
+    dell = server_is_dell(ip, username, password)
+    devices
+    if(not dell):
+        devices = get_pci_objects(ip, username, password)
+    else:
+        devices = None
     adapters = get_adapter_objects(ip, username, password)
     nics = []
     for adapter in adapters:
-        nics.append(NetworkAdapterInfo(adapter, []))
+        nics.append(NetworkAdapterInfo(adapter, devices))
     
     return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
