@@ -49,8 +49,7 @@ print("\n")
 servers = []
 for ip in ipList:
     servers.append(populate_system(ip, username, password))
-    print("Is this a dell server?", server_is_dell(ip, username, password))
-    
+
 if printMode == "table":
     lst = build_list(servers)
     print(df_list(lst).to_string(index=False))
