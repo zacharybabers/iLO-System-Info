@@ -223,7 +223,7 @@ def populate_system(ip, username, password):
     functionNumIterator = 0
     for i in range (0, len(adapters)):
         if not dell:
-            nics.append(NetworkAdapterInfo(adapters[i], get_pci_objects(ip, username, password)))
+            nics.append(NetworkAdapterInfo(adapters[i], get_pci_objects(ip, username, password), functionNum=None))
         else:
             if i > 0:
                 #if this network adapters bus number equals the last one, function num iterator gets one added. Otherwise it becomes 0
