@@ -54,7 +54,7 @@ for ip in ipList:
 
     executionTime = endTime - startTime
     
-    print("Populated information for server at ip " + ip + " in " + executionTime)
+    print("Populated information for server at ip " + ip + " in " + str(executionTime))
 
 if printMode == "table":
     lst = build_list(servers)
