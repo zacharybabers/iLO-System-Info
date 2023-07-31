@@ -1,7 +1,6 @@
 import getpass
 import sys
 import pandas as pd
-import time
 from .util_functions import get_ips
 from .util_functions import process_file
 from .util_functions import df_list
@@ -48,13 +47,7 @@ print("\n")
 
 servers = []
 for ip in ipList:
-    startTime = time.time()
     servers.append(populate_system(ip, username, password))
-    endTime = time.time()
-
-    executionTime = endTime - startTime
-    
-    print("Populated information for server at ip " + ip + " in " + str(executionTime))
 
 if printMode == "table":
     lst = build_list(servers)
