@@ -213,11 +213,9 @@ def populate_system(ip, username, password):
     # NICs
     # devices = get_pci_objects(ip, username, password)
     dell = server_is_dell(ip, username, password)
-    devices
+    devices = None
     if(not dell):
         devices = get_pci_objects(ip, username, password)
-    else:
-        devices = None
     adapters = get_adapter_objects(ip, username, password)
     nics = []
     for adapter in adapters:
