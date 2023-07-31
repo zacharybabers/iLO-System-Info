@@ -219,11 +219,18 @@ def populate_system(ip, username, password):
     dell = server_is_dell(ip, username, password)
     adapters = get_adapter_objects(ip, username, password)
     nics = []
+    functionNumIterator = 0
     for i in range (0, len(adapters)):
         if not dell:
             nics.append(NetworkAdapterInfo(adapters[i], get_pci_objects(ip, username, password)))
         else:
-            nics.append(NetworkAdapterInfo(adapters[i], devices=None, functionNum=i))
+            if i > 0:
+                #if this network adapters bus number equals the last one, function num iterator gets one added. Otherwise it becomes 0
+                if adapters[i].get('Oem').get('Dell').get('DellNIC').get('BusNumber') == adapters[i-1].get('Oem').get('Dell').get('DellNIC').get('BusNumber'):
+                    functionNumIterator = functionNumIterator + 1
+                else:
+                    functionNumIterator = 0
+            nics.append(NetworkAdapterInfo(adapters[i], devices=None, functionNum=functionNumIterator))
         
     
     return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
