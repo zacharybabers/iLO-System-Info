@@ -103,7 +103,7 @@ class DriveInfo:
         return(infoString)
 
 class NetworkAdapterInfo:
-    def __init__(self, adapter, devices):
+    def __init__(self, adapter, devices, functionNum):
         Oem = adapter.get("Oem", "Unavailable")
         if type(Oem) == dict and not Oem.get('Dell') == None:
             self.isDell = True
@@ -117,17 +117,20 @@ class NetworkAdapterInfo:
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.PciAddress = self.pciAddress(devices)
+        self.PciAddress = self.pciAddress(devices, functionNum)
 
-    def pciAddress(self, devices):
+    def pciAddress(self, devices, functionNum):
         address = ""
         if devices == None:
-            return "Unavailable"
+            address += "0000:"
+            address += hex(device.get('Oem').get('Dell').get('DellNIC').get('BusNumber', 'Unavailable'))[2:] + ":"
+            address += "00."
+            address += hex(functionNum)[2:]
         for device in devices:
             if device.get('Name', 'Unavailable') == self.name:
                 address += "0000:"
                 address += hex(device.get('BusNumber'))[2:] + ":"
-                address += hex(device.get('DeviceNumber'))[2:] + ":"
+                address += hex(device.get('DeviceNumber'))[2:] + "."
                 address += hex(device.get('FunctionNumber'))[2:]
         if len(address) == 0:
             return "Unavailable"
@@ -213,13 +216,14 @@ def populate_system(ip, username, password):
     # NICs
     # devices = get_pci_objects(ip, username, password)
     dell = server_is_dell(ip, username, password)
-    devices = None
-    if(not dell):
-        devices = get_pci_objects(ip, username, password)
     adapters = get_adapter_objects(ip, username, password)
     nics = []
-    for adapter in adapters:
-        nics.append(NetworkAdapterInfo(adapter, devices))
+    for i in range (0, len(adapters)):
+        if not dell:
+            nics.append(NetworkAdapterInfo(adapters[i], get_pci_objects(ip, username, password)))
+        else:
+            nics.append(NetworkAdapterInfo(adapters[i], devices=None, functionNum=i))
+        
     
     return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     
