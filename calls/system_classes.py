@@ -117,13 +117,13 @@ class NetworkAdapterInfo:
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.PciAddress = self.pciAddress(devices, functionNum)
+        self.PciAddress = self.pciAddress(devices, functionNum, Oem)
 
-    def pciAddress(self, devices, functionNum):
+    def pciAddress(self, devices, functionNum, Oem):
         address = ""
         if devices == None:
             address += "0000:"
-            address += hex(device.get('Oem').get('Dell').get('DellNIC').get('BusNumber', 'Unavailable'))[2:] + ":"
+            address += hex(Oem.get('Dell').get('DellNIC').get('BusNumber', 'Unavailable'))[2:] + ":"
             address += "00."
             address += hex(functionNum)[2:]
         for device in devices:
