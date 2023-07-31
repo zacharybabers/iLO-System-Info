@@ -2,10 +2,23 @@ import warnings
 import requests
 import json
 
+class CachedRequester:
+    _cache = {}
+
+    @staticmethod
+    def cachedRequest(url, username, password):
+        if url in CachedRequester._cache:
+            return CachedRequester._cache[url]
+        else:
+            response = requests.get(url, auth=(username, password), verify=False, timeout=5)
+            CachedRequester._cache[url] = response
+            return response
+
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False, timeout=5))
+        url = "https://" + ip + redfish_item
+        response = (CachedRequester.cachedRequest(url, username, password))
     return response
 
 def get_chassisIDs(ip, username, password):
