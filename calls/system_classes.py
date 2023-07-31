@@ -8,6 +8,7 @@ from .redfish_functions import get_adapter_objects
 from .redfish_functions import get_pci_objects
 from .redfish_functions import get_network_interface_count
 from .redfish_functions import get_model_name
+from .redfish_functions import server_is_dell
 
 class ComputerSystem:
     def __init__(self, ip, model, memInfo, processors, drives, nics, interfaceCount):
@@ -102,28 +103,41 @@ class DriveInfo:
         return(infoString)
 
 class NetworkAdapterInfo:
-    def __init__(self, adapter, devices):
-        self.name = adapter.get('Name', "Unavailable")
+    def __init__(self, adapter, devices, functionNum):
+        Oem = adapter.get("Oem", "Unavailable")
+        if type(Oem) == dict and not Oem.get('Dell') == None:
+            self.isDell = True
+            self.name = Oem.get('Dell').get('DellNIC').get('ProductName')
+        else:
+            self.name = adapter.get('Name', "Unavailable") 
+        self.name = self.name.split(' - ')[0].strip()
         self.ID = adapter.get('Id', "Unavailable")
         self.location = adapter.get('Location', "Unavailable")
         self.ports = []
         portList = get_adapter_ports(adapter)
         for port in portList:
             self.ports.append(PortInfo(port))
-        self.pciAddress(devices)
+        self.PciAddress = self.pciAddress(devices, functionNum, Oem)
+        self.name = self.name[:40]
 
-    def pciAddress(self, devices):
+    def pciAddress(self, devices, functionNum, Oem):
         address = ""
-        for device in devices:
-            if device.get('Name', 'Unavailable') == self.name:
-                address += "0000:"
-                address += hex(device.get('BusNumber'))[2:] + ":"
-                address += hex(device.get('DeviceNumber'))[2:] + ":"
-                address += hex(device.get('FunctionNumber'))[2:]
-        if len(address) == 0:
-            self.PciAddress = "Unavailable"
+        if devices == None:
+            address += "0000:"
+            address += hex(Oem.get('Dell').get('DellNIC').get('BusNumber', 'Unavailable'))[2:] + ":"
+            address += "00."
+            address += hex(functionNum)[2:]
         else:
-            self.PciAddress = address
+            for device in devices:
+                if device.get('Name', 'Unavailable') == self.name:
+                    address += "0000:"
+                    address += hex(device.get('BusNumber'))[2:] + ":"
+                    address += hex(device.get('DeviceNumber'))[2:] + "."
+                    address += hex(device.get('FunctionNumber'))[2:]
+        if len(address) == 0:
+            return "Unavailable"
+        else:
+            return address
 
     def __str__(self):
         infoString = ""
@@ -193,19 +207,32 @@ def populate_system(ip, username, password):
 
     # Drives
     storages = get_storage_objects(ip, username, password)
-    if not (len(storages) == 1):
-        print(f"System at ip {ip} has wrong number of storages.")
-    drives = get_drive_objects(ip, username, password, storages[0])
+    drives = []
+    for storage in storages:
+        for driveObject in get_drive_objects(ip, username, password, storage):
+            drives.append(driveObject)
     driveInfos = []
     for drive in drives:
         driveInfos.append(DriveInfo(drive))
 
     # NICs
-    devices = get_pci_objects(ip, username, password)
+    # devices = get_pci_objects(ip, username, password)
+    dell = server_is_dell(ip, username, password)
     adapters = get_adapter_objects(ip, username, password)
     nics = []
-    for adapter in adapters:
-        nics.append(NetworkAdapterInfo(adapter, devices))
+    functionNumIterator = 0
+    for i in range (0, len(adapters)):
+        if not dell:
+            nics.append(NetworkAdapterInfo(adapters[i], get_pci_objects(ip, username, password), functionNum=None))
+        else:
+            if i > 0:
+                #if this network adapters bus number equals the last one, function num iterator gets one added. Otherwise it becomes 0
+                if adapters[i].get('Oem').get('Dell').get('DellNIC').get('BusNumber') == adapters[i-1].get('Oem').get('Dell').get('DellNIC').get('BusNumber'):
+                    functionNumIterator = functionNumIterator + 1
+                else:
+                    functionNumIterator = 0
+            nics.append(NetworkAdapterInfo(adapters[i], devices=None, functionNum=functionNumIterator))
+        
     
     return ComputerSystem(ip, model, memoryInfo, processors, driveInfos, nics, get_network_interface_count(ip, username, password))
     

@@ -8,6 +8,13 @@ def basic_request(ip, username, password, redfish_item):
         response = (requests.get("https://" + ip + redfish_item, auth=(username, password), verify=False, timeout=5))
     return response
 
+def get_chassisIDs(ip, username, password):
+    chassis = json.loads(basic_request(ip, username, password, "/redfish/v1/Chassis").text)
+    chassisIDs = []
+    for member in chassis['Members']:
+        chassisIDs.append(member['@odata.id'])
+    return chassisIDs
+
 def get_systemIDs(ip, username, password):
     systems = json.loads(basic_request(ip,username,password,"/redfish/v1/Systems").text)
     systemIDs = []
@@ -71,8 +78,10 @@ def get_cpu_summary(ip, username, password):
 # {'Count': 2, 'Model': 'Vendor(R) CPU(R) Gold xN CPU @ x.xGHz', 'Status': {'HealthRollup': 'OK'}}
 
 def get_processorIDs(ip, username, password):
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
     processorIDs = []
-    processors = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Processors").text)
+    processors = json.loads(basic_request(ip, username, password, systemID + "/Processors").text)
     for processor in processors['Members']:
         processorIDs.append(processor['@odata.id'])
     return processorIDs
@@ -104,8 +113,10 @@ def processor_info_dump(ip, username, password):
     return out
 
 def get_storageIDs(ip, username, password):
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
     storageIDs = []
-    storages = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/Storage").text)
+    storages = json.loads(basic_request(ip, username, password, systemID + "/Storage").text)
     for storage in storages['Members']:
         storageIDs.append(storage['@odata.id'])
     return storageIDs
@@ -153,11 +164,15 @@ def drive_info_dump(ip, username, password):
 
 # Network Interface functions; there are currently no network interfaces being returned by our iLO, so I will just display the number of network interfaces so it is apparent if/when this functionality needs to be added
 def get_network_interface_count(ip, username, password):
-    interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    interfaces = json.loads(basic_request(ip, username, password, systemID + "/NetworkInterfaces").text)
     return interfaces['Members@odata.count']
 
 def get_interfaceIDs(ip, username, password):
-    interfaces = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/NetworkInterfaces").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    interfaces = json.loads(basic_request(ip, username, password, systemID + "/NetworkInterfaces").text)
     driveIDs = []
     for id in interfaces['Members']:
         driveIDs.append(id['@odata.id'])
@@ -176,12 +191,27 @@ def interface_info_dump(ip, username, password):
     for interface in interfaces:
         infoString+="Interface Name: " + interface["Name"] + "\n"
     return infoString
-####
+
 def get_adapterIDs(ip, username, password):
-    adapters = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/BaseNetworkAdapters").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    for id in adapters['Members']:
-        adapterIDs.append(id['@odata.id'])
+    dell = system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable'
+    if dell:
+        chassisID = get_chassisIDs(ip, username, password)[0]
+        adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
+        viewIDs = []
+        for id in adapters['Members']:
+            viewIDs.append(id['@odata.id'])
+        for viewID in viewIDs:
+            networkFunctions = json.loads(basic_request(ip, username, password, viewID + "/NetworkDeviceFunctions").text)
+            for id in networkFunctions['Members']:
+                adapterIDs.append(id['@odata.id'])
+    else:
+        adapters = json.loads(basic_request(ip, username, password, systemID + "/BaseNetworkAdapters").text)
+        for id in adapters['Members']:
+            adapterIDs.append(id['@odata.id'])
     return adapterIDs
 
 def get_adapter_objects(ip, username, password):
@@ -192,7 +222,7 @@ def get_adapter_objects(ip, username, password):
     return adapters
 
 def get_adapter_ports(adapter):
-    ports = adapter['PhysicalPorts']
+    ports = adapter.get('PhysicalPorts', [])
     return ports
 
 def get_port_info(port):
@@ -232,7 +262,9 @@ def adapter_info_dump(ip, username, password):
     return out
     
 def get_pciIDs(ip, username, password):
-    devices = json.loads(basic_request(ip, username, password, "/redfish/v1/Systems/1/pcidevices").text)
+    systems = get_systemIDs(ip, username, password)
+    systemID = systems[0]
+    devices = json.loads(basic_request(ip, username, password, systemID + "/pcidevices").text)
     deviceIDs = []
     for id in devices['Members']:
         deviceIDs.append(id['@odata.id'])
@@ -261,6 +293,10 @@ def get_nic_pci_address(ip, username, password):
         out.append(nic['Name'] + " PCI Address: " + pcistring)
     return out
 
-
+def server_is_dell(ip, username, password):
+    system = get_system_objects(ip, username, password)[0]
+    if system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable':
+        return True
+    return False
 
     

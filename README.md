@@ -1,4 +1,4 @@
-This is a simple python utility that returns basic information about an HP server using redfish credentials.
+This is a simple python utility that returns basic information about an HP server using redfish credentials. Now with support for Dell Poweredge servers.
 
 Dependency: pip3 install pandas
 
@@ -17,3 +17,4 @@ NOTES:
 
 IPs can be inputted as a single value or a comma delimited list. 
 If you want to input a range of IPs (i.e XXX.XXX.XXX.11, XXX.XXX.XXX.12, XXX.XXX.XXX.13), you can input 'XXX.XXX.XXX.11-13'.
+

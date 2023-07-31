@@ -6,6 +6,7 @@ from .util_functions import process_file
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
+from .redfish_functions import server_is_dell
 from .system_classes import populate_system
 
 num_arguments = len(sys.argv) - 1
