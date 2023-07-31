@@ -8,10 +8,8 @@ class CachedRequester:
     @staticmethod
     def cachedRequest(url, username, password):
         if url in CachedRequester._cache:
-            print("got cached")
             return CachedRequester._cache[url]
         else:
-            print("getting new")
             response = requests.get(url, auth=(username, password), verify=False, timeout=5)
             CachedRequester._cache[url] = response
             return response
