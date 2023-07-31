@@ -118,6 +118,7 @@ class NetworkAdapterInfo:
         for port in portList:
             self.ports.append(PortInfo(port))
         self.PciAddress = self.pciAddress(devices, functionNum, Oem)
+        self.name = self.name[:40]
 
     def pciAddress(self, devices, functionNum, Oem):
         address = ""
