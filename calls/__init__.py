@@ -17,7 +17,7 @@ printMode = ""
 parser = argparse.ArgumentParser(description="This program gets information from HP and Dell lights out (iLO/iDRAC)")
 parser.add_argument('-i', '--ip', type=str, help='Input a list of IPs (comma delimited). Can input a range of ips ie XXX.XXX.XXX.11-13')
 parser.add_argument('-u', '--username', type=str, help='Input credentials for lights out utility in format username:password')
-parser.add_argument('-m', '--mode', type='str', help='Input return mode for information. Modes: table, detailed')
+parser.add_argument('-m', '--mode', type=str, help='Input return mode for information. Modes: table, detailed')
 
 args = parser.parse_args()
 
