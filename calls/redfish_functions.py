@@ -14,6 +14,8 @@ class CachedRequester:
             CachedRequester._cache[url] = response
             return response
 
+
+# Example of redfish_item: '/redfish/v1/Systems/System.Embedded.1'
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
