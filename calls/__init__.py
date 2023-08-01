@@ -1,6 +1,7 @@
 import getpass
 import sys
 import pandas as pd
+import argparse
 from .util_functions import get_ips
 from .util_functions import process_file
 from .util_functions import df_list
@@ -8,12 +9,25 @@ from .util_functions import build_list
 from .redfish_functions import basic_request
 from .system_classes import populate_system
 
-num_arguments = len(sys.argv) - 1
-print("num arguments: " + str(num_arguments))
 ipList = []
 username = ""
 password = ""
 printMode = ""
+
+parser = argparse.ArgumentParser(description="This program gets information from HP and Dell lights out (iLO/iDRAC)")
+parser.add_argument('-i', '--ip', type=str, help='Input a list of IPs (comma delimited). Can input a range of ips ie XXX.XXX.XXX.11-13')
+parser.add_argument('-u', '--username', type=str, help='Input credentials for lights out utility in format username:password')
+parser.add_argument('-m', '--mode', type='str', help='Input return mode for information. Modes: table, detailed')
+
+args = parser.parse_args()
+
+ipString = ""
+
+print(args.ip, args.username, args.mode)
+username = ""
+password = ""
+printMode = ""
+
 
 if num_arguments == 0:
     ipList = get_ips(input("Enter iLO IPs: "))
