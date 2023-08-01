@@ -27,12 +27,16 @@ printMode = args.mode
 
 if(ipString == None):
     print("No ip given. Provide ip with -i")
+    sys.exit()
 if(username == None):
     print("No username given. Provide credentials with -u")
+    sys.exit()
 if(password == None):
     print("No password given. Provide credentials with -u")
+    sys.exit()
 if(printMode == None):
     print("No mode given. Provide mode with -m")
+    sys.exit()
 
 ipList = get_ips(ipString)
 
