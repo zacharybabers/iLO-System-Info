@@ -9,6 +9,7 @@ from .redfish_functions import basic_request
 from .system_classes import populate_system
 
 num_arguments = len(sys.argv) - 1
+print("num arguments: " + str(num_arguments))
 ipList = []
 username = ""
 password = ""
