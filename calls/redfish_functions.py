@@ -210,9 +210,8 @@ def interface_info_dump(ip, username, password):
 def get_adapterIDs(ip, username, password):
     systems = get_systemIDs(ip, username, password)
     systemID = systems[0]
-    system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    dell = system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable'
+    dell = server_is_dell(ip, username, password)
     if dell:
         chassisID = get_chassisIDs(ip, username, password)[0]
         adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)

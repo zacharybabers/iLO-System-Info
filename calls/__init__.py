@@ -1,9 +1,7 @@
-import getpass
 import sys
 import pandas as pd
 import argparse
 from .util_functions import get_ips
-from .util_functions import process_file
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
