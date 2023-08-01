@@ -21,28 +21,22 @@ parser.add_argument('-m', '--mode', type=str, help='Input return mode for inform
 
 args = parser.parse_args()
 
-ipString = ""
 
-print(args.ip, args.username, args.mode)
-username = ""
-password = ""
-printMode = ""
+ipString = args.ip
+username = args.username.split(':')[0]
+password = args.username.split(':')[1]
+printMode = args.mode
 
+if(ipString == None):
+    print("No ip given. Provide ip with -i")
+if(username == None):
+    print("No username given. Provide credentials with -u")
+if(password == None):
+    print("No password given. Provide credentials with -u")
+if(printMode == None):
+    print("No mode given. Provide mode with -m")
 
-if num_arguments == 0:
-    ipList = get_ips(input("Enter iLO IPs: "))
-    username = input("Enter iLO Username: ")
-    password = getpass.getpass("Enter iLO Password: ")
-    printMode = input("Enter print mode (table, detailed): ")
-elif num_arguments == 1:
-    credentials = process_file(sys.argv[1])
-    ipList = get_ips(credentials[0])
-    username = credentials[1]
-    password = credentials[2]
-    printMode = credentials[3]
-else:
-    print("Invalid num arguments")
-    sys.exit()
+ipList = get_ips(ipString)
 
 ipList = sorted(ipList, key=lambda ip: [int(num) for num in ip.split('.')])
 
