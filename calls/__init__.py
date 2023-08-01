@@ -1,33 +1,44 @@
-import getpass
 import sys
 import pandas as pd
+import argparse
 from .util_functions import get_ips
-from .util_functions import process_file
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
 from .system_classes import populate_system
 
-num_arguments = len(sys.argv) - 1
 ipList = []
 username = ""
 password = ""
 printMode = ""
 
-if num_arguments == 0:
-    ipList = get_ips(input("Enter iLO IPs: "))
-    username = input("Enter iLO Username: ")
-    password = getpass.getpass("Enter iLO Password: ")
-    printMode = input("Enter print mode (table, detailed): ")
-elif num_arguments == 1:
-    credentials = process_file(sys.argv[1])
-    ipList = get_ips(credentials[0])
-    username = credentials[1]
-    password = credentials[2]
-    printMode = credentials[3]
-else:
-    print("Invalid num arguments")
+parser = argparse.ArgumentParser(description="This program gets information from HP and Dell lights out (iLO/iDRAC)")
+parser.add_argument('-i', '--ip', type=str, help='Input a list of IPs (comma delimited). Can input a range of ips ie XXX.XXX.XXX.11-13')
+parser.add_argument('-u', '--username', type=str, help='Input credentials for lights out utility in format username:password')
+parser.add_argument('-m', '--mode', type=str, help='Input return mode for information. Modes: table, detailed')
+
+args = parser.parse_args()
+
+
+ipString = args.ip
+username = args.username.split(':')[0]
+password = args.username.split(':')[1]
+printMode = args.mode
+
+if(ipString == None):
+    print("No ip given. Provide ip with -i")
     sys.exit()
+if(username == None):
+    print("No username given. Provide credentials with -u")
+    sys.exit()
+if(password == None):
+    print("No password given. Provide credentials with -u")
+    sys.exit()
+if(printMode == None):
+    print("No mode given. Provide mode with -m")
+    sys.exit()
+
+ipList = get_ips(ipString)
 
 ipList = sorted(ipList, key=lambda ip: [int(num) for num in ip.split('.')])
 

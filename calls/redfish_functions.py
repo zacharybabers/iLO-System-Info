@@ -14,6 +14,8 @@ class CachedRequester:
             CachedRequester._cache[url] = response
             return response
 
+
+# Example of redfish_item: '/redfish/v1/Systems/System.Embedded.1'
 def basic_request(ip, username, password, redfish_item):
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -208,9 +210,8 @@ def interface_info_dump(ip, username, password):
 def get_adapterIDs(ip, username, password):
     systems = get_systemIDs(ip, username, password)
     systemID = systems[0]
-    system = json.loads(basic_request(ip, username, password, systemID).text)
     adapterIDs = []
-    dell = system.get('Oem').get('Hpe', 'Unavailable') == 'Unavailable'
+    dell = server_is_dell(ip, username, password)
     if dell:
         chassisID = get_chassisIDs(ip, username, password)[0]
         adapters = json.loads(basic_request(ip,username,password, chassisID + "/NetworkAdapters").text)
