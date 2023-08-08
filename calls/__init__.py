@@ -1,12 +1,10 @@
 import sys
 import pandas as pd
 import argparse
-import time
 from .util_functions import get_ips
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
-from .redfish_functions import CachedRequester
 from .system_classes import populate_system
 
 ipList = []
@@ -57,26 +55,9 @@ print("All redfish responses successful.")
 
 print("\n")
 
-executionTimes = []
 servers = []
-for i in range(0,10):
-    CachedRequester.clearCache()
-    print("Doing run " + str(i+1) + " of 10...")
-    servers = []
-    for ip in ipList:
-        startTime = time.time()
-        servers.append(populate_system(ip, username, password))
-        endTime = time.time()
-
-        executionTime = endTime - startTime
-        executionTimes.append(executionTime)
-
-timeSum = 0
-for time in executionTimes:
-    timeSum += time
-
-print("average run time after all runs complete: " + str(timeSum / len(executionTimes)))
-
+for ip in ipList:
+    servers.append(populate_system(ip, username, password))
 
 if printMode == "table":
     lst = build_list(servers)
