@@ -69,6 +69,12 @@ for i in range(0,10):
         executionTime = endTime - startTime
         executionTimes.append(executionTime)
 
+timeSum = 0
+for time in executionTimes:
+    timeSum += time
+
+print("average run time after all runs complete: " + str(timeSum / len(executionTimes)))
+
 
 if printMode == "table":
     lst = build_list(servers)
