@@ -46,15 +46,23 @@ print("All redfish responses successful.")
 
 print("\n")
 
-
+executionTimes = []
 servers = []
-for ip in ipList:
-    startTime = time.time()
-    servers.append(populate_system(ip, username, password))
-    endTime = time.time()
+for i in range(0,10):
+    servers = []
+    for ip in ipList:
+        startTime = time.time()
+        servers.append(populate_system(ip, username, password))
+        endTime = time.time()
 
-    executionTime = endTime - startTime
-    print("Populated server info for ip " + ip + " in " + str(executionTime))
+        executionTime = endTime - startTime
+        executionTimes.append(executionTime)
+
+timeSum = 0
+for time in executionTimes:
+    timeSum += time
+
+print("The average execution time of this program was " + timeSum / len(executionTimes))
 
 if printMode == "table":
     lst = build_list(servers)
