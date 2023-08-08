@@ -49,6 +49,7 @@ print("\n")
 executionTimes = []
 servers = []
 for i in range(0,10):
+    print("Doing run " + str(i+1) + " of " + 10)
     servers = []
     for ip in ipList:
         startTime = time.time()
@@ -62,7 +63,7 @@ timeSum = 0
 for time in executionTimes:
     timeSum += time
 
-print("The average execution time of this program was " + timeSum / len(executionTimes))
+print("The average execution time of this program was " + str(timeSum / len(executionTimes)))
 
 if printMode == "table":
     lst = build_list(servers)
