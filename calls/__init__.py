@@ -49,7 +49,7 @@ print("\n")
 executionTimes = []
 servers = []
 for i in range(0,10):
-    print("Doing run " + str(i+1) + " of " + 10)
+    print("Doing run " + str(i+1) + " of 10")
     servers = []
     for ip in ipList:
         startTime = time.time()
