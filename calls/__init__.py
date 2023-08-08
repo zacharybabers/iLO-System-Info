@@ -6,6 +6,7 @@ from .util_functions import get_ips
 from .util_functions import df_list
 from .util_functions import build_list
 from .redfish_functions import basic_request
+from .redfish_functions import CachedRequester
 from .system_classes import populate_system
 
 ipList = []
@@ -59,6 +60,7 @@ print("\n")
 executionTimes = []
 servers = []
 for i in range(0,10):
+    CachedRequester.clearCache()
     print("Doing run " + str(i+1) + " of 10...")
     servers = []
     for ip in ipList:

@@ -13,6 +13,10 @@ class CachedRequester:
             response = requests.get(url, auth=(username, password), verify=False, timeout=5)
             CachedRequester._cache[url] = response
             return response
+        
+    @staticmethod
+    def clearCache():
+        CachedRequester._cache = {}
 
 
 # Example of redfish_item: '/redfish/v1/Systems/System.Embedded.1'
