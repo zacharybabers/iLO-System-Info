@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import argparse
+import time
 from .util_functions import get_ips
 from .util_functions import df_list
 from .util_functions import build_list
@@ -55,10 +56,19 @@ print("All redfish responses successful.")
 
 print("\n")
 
-
+executionTimes = []
 servers = []
-for ip in ipList:
-    servers.append(populate_system(ip, username, password))
+for i in range(0,10):
+    print("Doing run " + str(i+1) + " of 10...")
+    servers = []
+    for ip in ipList:
+        startTime = time.time()
+        servers.append(populate_system(ip, username, password))
+        endTime = time.time()
+
+        executionTime = endTime - startTime
+        executionTimes.append(executionTime)
+
 
 if printMode == "table":
     lst = build_list(servers)
